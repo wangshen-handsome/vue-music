@@ -1,12 +1,19 @@
 import { defineStore } from "pinia";
+
 import {
   getBanner,
   getTags,
   getHotList,
   getNewDiscList,
-  getRankList,
+  getRank,
+  getMv,
 } from "@/apis/api";
-import { RequestHotData, RequestNewDiscData } from "@/types/home";
+
+import {
+  RequestHotData,
+  RequestNewDiscData,
+  RequestMvList,
+} from "@/types/home";
 
 type S = {
   hotTagList: any[];
@@ -18,7 +25,11 @@ type S = {
   newDiscData: RequestNewDiscData;
   newDiscList: any[];
   newDiscLoading: boolean;
+  rank: any[];
   rankList: any[];
+  mvData: RequestMvList;
+  mvList: any[];
+  mvLoading: boolean;
 };
 
 export const useHomeStore = defineStore({
@@ -55,8 +66,22 @@ export const useHomeStore = defineStore({
       newDiscList: [],
       //页面加载状态
       newDiscLoading: true,
-      //排行榜数据
+      //排行榜
+      rank: [],
+      //排行榜数据列表
       rankList: [],
+      //MV请求所需要的数据
+      mvData: {
+        limit: 10,
+        offset: 0,
+        area: "",
+        type: "",
+        order: "",
+      },
+      //MV数据列表
+      mvList: [],
+      //MV加载状态
+      mvLoading: true,
     };
   },
   actions: {
@@ -90,13 +115,21 @@ export const useHomeStore = defineStore({
         let res = await getNewDiscList(this.newDiscData);
         this.newDiscLoading = false;
         this.newDiscList.push(...res.monthData.splice(0, 18));
-        console.log(this.newDiscList);
       }
     },
-    async actionRankList() {
-      if (!this.rankList.length) {
-        let res = await getRankList();
-        this.rankList.push(...res.list.splice(0, 6));
+    async actionRank() {
+      if (!this.rank.length) {
+        let res = await getRank();
+        this.rank.push(...res.list.splice(0, 6));
+      }
+    },
+    async actionMvList() {
+      if (!this.mvList.length || this.mvData.area) {
+        this.mvLoading = true;
+        this.mvList = [];
+        let res = await getMv(this.mvData);
+        this.mvLoading = false;
+        this.mvList.push(...res.data);
       }
     },
   },

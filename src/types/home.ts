@@ -23,7 +23,7 @@ export type Tags = {
 export type RequestHotData = {
   limit: number;
   order: string;
-  offset: number | string;
+  offset: number;
   cat: string;
 };
 
@@ -55,7 +55,7 @@ export type RequestNewDiscData = {
  * @description:
  * @return {*}
  */
-export type newDiscList = {
+export type NewDiscList = {
   code: number;
   monthData: any[];
   hasMore: boolean;
@@ -65,8 +65,53 @@ export type newDiscList = {
  * @description:
  * @return {*}
  */
-export type rankList = {
+export type Rank = {
   artistToplist: any[];
   list: any[];
   code: number;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type RequestRankList = {
+  id: string;
+  s?: number;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type RankList = {
+  code: number;
+  fromUserCount: number;
+  fromUsers: null;
+  playlist: any[];
+  privileges: any[];
+  relatedVideos: null;
+  resEntrance: null;
+  sharedPrivilege: null;
+  songFromUsers: null;
+  urls: null;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type RequestMvList = {
+  area: string;
+  type: string;
+  order: string;
+  limit: number;
+  offset: number;
+};
+
+export type MvList = {
+  code: number;
+  data: any[];
+  hasMore: boolean;
+  count: number;
 };

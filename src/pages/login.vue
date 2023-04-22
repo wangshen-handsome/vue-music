@@ -29,7 +29,7 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { ElInput, ElButton, ElForm, ElFormItem } from "element-plus";
+
 import { useRouter } from "vue-router";
 
 import type { FormInstance, FormRules } from "element-plus";

@@ -4,7 +4,7 @@
       <el-header><Header></Header></el-header>
       <el-container class="container">
         <el-aside width="200px"><Left></Left></el-aside>
-        <el-main>
+        <el-main class="main">
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -20,6 +20,9 @@ import Left from "@/components/main/left/Left.vue";
 .common-layout {
   .container {
     height: calc(100vh - 60px);
+    .main::-webkit-scrollbar {
+      display: none;
+    }
   }
 }
 </style>

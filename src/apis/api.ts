@@ -6,8 +6,12 @@ import {
   Tags,
   HotList,
   RequestNewDiscData,
-  newDiscList,
-  rankList,
+  NewDiscList,
+  Rank,
+  RequestRankList,
+  RankList,
+  RequestMvList,
+  MvList,
 } from "@/types/home";
 
 //获取首页banner图
@@ -30,12 +34,25 @@ export const getHotList = async (params: RequestHotData) => {
 
 //获取新碟上架列表
 export const getNewDiscList = async (params: RequestNewDiscData) => {
-  const res: newDiscList | any = await http.get("/top/album", params);
+  const res: NewDiscList | any = await http.get("/top/album", params);
   return res;
 };
 
 //获取排行榜
-export const getRankList = async () => {
-  const res: rankList | any = await http.get("/toplist");
+export const getRank = async () => {
+  const res: Rank | any = await http.get("/toplist");
+  return res;
+};
+
+//获取排行榜列表
+export const getRankList = async (params: RequestRankList) => {
+  params.s = params.s ? params.s : 8;
+  const res: RankList | any = await http.get("/playlist/detail", params);
+  return res;
+};
+
+//获取MV列表
+export const getMv = async (params: RequestMvList) => {
+  const res: MvList | any = await http.get("/mv/all", params);
   return res;
 };

@@ -5,7 +5,7 @@
         <el-skeleton-item class="img" variant="image" />
       </template>
       <template #default>
-        <el-carousel trigger="click">
+        <el-carousel trigger="click" class="img">
           <el-carousel-item v-for="item in bannerList" :key="item.imageUrl">
             <img :src="item.imageUrl" class="img" />
           </el-carousel-item>
@@ -15,7 +15,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, onMounted, toRefs } from "vue";
+import { toRefs } from "vue";
 
 import { useHomeStore } from "@/store/home";
 
@@ -29,5 +29,6 @@ actionBannerList.value();
 .img {
   width: 100%;
   height: 300px;
+  border-radius: 8px;
 }
 </style>

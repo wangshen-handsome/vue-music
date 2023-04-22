@@ -15,13 +15,15 @@
       </template>
       <template #default>
         <div class="item" v-for="item in list">
-          <el-image :src="item.coverImgUrl" class="img">
-            <template #placeholder>
-              <div class="image-slot">
-                <el-icon><Picture /></el-icon>
-              </div>
-            </template>
-          </el-image>
+          <div class="img">
+            <el-image :src="item.coverImgUrl">
+              <template #placeholder>
+                <div class="image-slot">
+                  <el-icon><Picture /></el-icon>
+                </div>
+              </template>
+            </el-image>
+          </div>
           <span class="text">{{ item.name }}</span>
           <span class="tag">
             {{ disposeTags(item.tags) }}
@@ -32,7 +34,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
+import { PropType } from "vue";
 
 import { Picture } from "@element-plus/icons-vue";
 
@@ -55,16 +57,34 @@ defineProps({
   .item {
     width: calc(100% / 6 - 20px);
     box-sizing: border-box;
-    transition: all 0.5s;
     overflow: hidden;
     cursor: pointer;
     .img {
       width: 100%;
+      overflow: hidden;
+      border-radius: 8px;
       transition: all 0.5s;
+      .el-image {
+        border-radius: 8px;
+        .el-image__inner {
+          border-radius: 8px;
+        }
+      }
     }
 
     .ske-img {
       height: 17vh;
+    }
+
+    .image-slot {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+      background: #e6e8eb;
+      color: var(--el-text-color-secondary);
+      font-size: 30px;
     }
     .text {
       margin-top: 15px;
@@ -80,7 +100,6 @@ defineProps({
     }
 
     &:hover {
-      transform: translateY(-5px);
       .img {
         transform: scale(1.1);
       }

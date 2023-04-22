@@ -8,7 +8,6 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive } from "vue";
-import { ElInput } from "element-plus";
 
 //搜索内容
 let searchText = ref<string>("");

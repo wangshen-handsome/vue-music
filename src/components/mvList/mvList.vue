@@ -1,6 +1,6 @@
 <template>
-  <div class="new-disc">
-    <el-skeleton class="new-disc" :count="count" :loading="loading" animated>
+  <div class="hot-list">
+    <el-skeleton class="hot-list" :count="count" :loading="loading" animated>
       <template #template>
         <div class="item">
           <el-skeleton-item class="img ske-img" variant="image" />
@@ -16,28 +16,39 @@
       <template #default>
         <div class="item" v-for="item in list">
           <div class="img">
-            <el-image :src="item.blurPicUrl">
+            <el-image :src="item.cover" fit="cover">
               <template #placeholder>
                 <div class="image-slot">
-                  <el-icon class="icon"><Picture /></el-icon>
+                  <el-icon><Picture /></el-icon>
                 </div>
               </template>
             </el-image>
+            <play class="play" theme="outline" size="24" fill="#333" />
           </div>
-          <div class="text">
-            <div class="name">{{ item.name }}</div>
-            <div class="singer">{{ item.artist.name }}</div>
-          </div>
-          <span class="tag">{{ item.type }}</span>
+          <span class="text">{{ item.name }}</span>
+          <span class="tag">
+            {{ item.artistName }}
+          </span>
+          <span class="play-count">
+            <monitor theme="filled" size="24" fill="#909090" style="margin-right: 5px" />
+            {{ formatNum(item.playCount) }}
+          </span>
         </div>
       </template>
     </el-skeleton>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
+import { PropType } from "vue";
 
 import { Picture } from "@element-plus/icons-vue";
+
+import { formatNum } from "@/utils/format";
+
+import { Monitor, Play } from "@icon-park/vue-next";
+
+//处理tags
+const disposeTags = (tags: string[]) => tags.reduce((a, b) => (a += "#" + b), "");
 
 defineProps({
   list: {
@@ -48,31 +59,36 @@ defineProps({
 });
 </script>
 <style scoped lang="scss">
-.new-disc {
-  width: 100%;
+.hot-list {
+  // background-color: #fafafa;
   display: flex;
+  justify-content: space-around;
   flex-wrap: wrap;
-  padding-left: 10px;
-  justify-content: space-between;
   .item {
-    width: calc(100% / 6 - 20px);
+    width: calc(100% / 5 - 20px);
     margin: 20px 20px 20px 0;
-    // display: flex;
     box-sizing: border-box;
-    cursor: pointer;
-    position: relative;
     overflow: hidden;
+    cursor: pointer;
     .img {
       width: 100%;
       overflow: hidden;
       border-radius: 8px;
-      transition: all 0.5s;
+      transition: all 0.3s;
+      position: relative;
       .el-image {
         border-radius: 8px;
         .el-image__inner {
           border-radius: 8px;
         }
       }
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    .ske-img {
+      height: 17vh;
     }
 
     .image-slot {
@@ -85,41 +101,24 @@ defineProps({
       color: var(--el-text-color-secondary);
       font-size: 30px;
     }
-
-    .ske-img {
-      height: 17vh;
-    }
     .text {
       margin-top: 15px;
-      .name {
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-        margin-bottom: 10px;
-      }
-      .singer {
-        font-size: 12px;
-        color: #909090;
-      }
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
-    &:hover {
-      .img {
-        transform: scale(1.1);
-      }
-    }
-    .tag {
-      position: absolute;
-      top: 5px;
-      right: -30px;
-      width: 100px;
-      line-height: 24px;
+    .tag,
+    .play-count {
+      color: #909090;
       font-size: 12px;
-      transform: rotate(45deg);
-      text-align: center;
-      color: #fff;
-      background-color: orange;
+      margin-top: 10px;
+    }
+    .play-count {
+      display: block;
+      display: flex;
+      align-items: center;
     }
   }
 }

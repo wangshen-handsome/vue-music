@@ -16,7 +16,6 @@
 </template>
 <script setup lang="ts">
 import { ref, reactive, watch, onMounted, computed } from "vue";
-import { ElButton, ElSwitch, ElCheckbox, ElMessage } from "element-plus";
 import { useDark, useToggle } from "@vueuse/core";
 import { Sunny, Moon } from "@element-plus/icons-vue";
 

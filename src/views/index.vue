@@ -39,7 +39,23 @@
     </div>
     <!-- 排行榜 -->
     <div class="rank">
-      <Rank></Rank>
+      <Rank :rank="rank"></Rank>
+    </div>
+    <!-- 最新MV -->
+    <div class="hot">
+      <div class="top">
+        <h3 class="title">最新MV</h3>
+        <span
+          v-for="(item, index) in mvTagList"
+          :class="[index === activeMvIndex ? 'active item-title' : 'item-title']"
+          @click="mvTagClick(item, index)"
+          :key="item"
+          >{{ item }}</span
+        >
+      </div>
+      <div class="main">
+        <mv-list :count="mvData.limit" :list="mvList" :loading="mvLoading"></mv-list>
+      </div>
     </div>
   </div>
 </template>
@@ -48,13 +64,11 @@ import { ref, reactive, toRefs } from "vue";
 
 import Banner from "@/components/banner/banner.vue";
 
-import { useHomeStore } from "@/store/home";
-
 import HotList from "@/components/hotList/hotList.vue";
 
-import NewDisc from "@/components/newDisc/newDisc.vue";
+import MvList from "@/components/mvList/mvList.vue";
 
-import Rank from "@/components/rank/rank.vue";
+import { useHomeStore } from "@/store/home";
 
 let {
   hotTagList,
@@ -67,7 +81,12 @@ let {
   actionNewDiscList,
   newDiscList,
   newDiscLoading,
-  actionRankList,
+  actionRank,
+  rank,
+  actionMvList,
+  mvData,
+  mvList,
+  mvLoading,
 } = toRefs(useHomeStore());
 
 //hotTag栏选中下标
@@ -75,6 +94,9 @@ let activeHotIndex = ref<number | string>(0);
 
 //newDiscTag栏选中下标
 let activeNewDiscIndex = ref<number | string>(0);
+
+//Mv Tag栏选中下标
+let activeMvIndex = ref<number | string>(0);
 
 //hotTag点击事件
 const hotTagClick = (name: string, index: number) => {
@@ -94,6 +116,15 @@ const newDiscTagClick = (name: string, index: number) => {
   actionNewDiscList.value();
 };
 
+//MV Tag点击事件
+const mvTagClick = (name: string, index: number) => {
+  activeMvIndex.value = index;
+  mvData.value.area = name;
+
+  //重新调用获取mvList
+  actionMvList.value();
+};
+
 //新碟上架tag数据
 const newDiscTagList = [
   { name: "全部", code: "all" },
@@ -103,14 +134,19 @@ const newDiscTagList = [
   { name: "日本", code: "jp" },
 ];
 
+//MV tag 数据
+const mvTagList = ["全部", "内地", "港台", "欧美", "日本", "韩国"];
+
 //请求热门推荐tag数据
 actionHotTagList.value();
 //请求热门推荐列表数据
 actionHotList.value();
 //请求新碟上架列表数据
 actionNewDiscList.value();
-//请求排行榜数据
-actionRankList.value();
+//请求排行榜
+actionRank.value();
+//请求MV
+actionMvList.value();
 </script>
 <style scoped lang="scss">
 .hot {

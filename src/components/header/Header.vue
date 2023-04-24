@@ -50,22 +50,5 @@ const goLogin = () => {
 };
 </script>
 <style scoped lang="scss">
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-  .menu {
-    flex: 1;
-    text-align: center;
-    font-weight: 600;
-    font-family: Tahoma;
-    font-size: 24px;
-    color: #409EFF;
-  }
-  .switch,
-  .login {
-    margin-right: 20px;
-  }
-}
+@import '@/styles/components/Header.scss'
 </style>

@@ -1,0 +1,8 @@
+.common-layout {
+    .container {
+      height: calc(100vh - 60px);
+      .main::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }

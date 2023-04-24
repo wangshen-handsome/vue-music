@@ -32,31 +32,5 @@ const menuClick = (index: number, title: string) => {
 };
 </script>
 <style scoped lang="scss">
-.menu {
-  width: 90%;
-  margin: 30px 0 30px 20px;
-  .box {
-    width: 90%;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-    .item {
-      padding: 10px 15px;
-      display: flex;
-      font-size: 18px;
-      color: rgb(176, 222, 241);
-      font-family: Tahoma;
-      cursor: pointer;
-      .icon {
-        margin-right: 10px;
-      }
-    }
-    .active {
-      background-color: #fff;
-      box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
-      border-radius: 8px 8px 8px 8px;
-      color: #409eff;
-    }
-  }
-}
+@import '@/styles/components/Left.scss'
 </style>

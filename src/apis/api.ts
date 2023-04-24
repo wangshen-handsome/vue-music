@@ -12,6 +12,12 @@ import {
   RankList,
   RequestMvList,
   MvList,
+  SearchHotList,
+  RequestSearchSuggestionList,
+  SearchSuggestionList,
+  RequestHotRadioList,
+  HotRadioList,
+  HotSingerList,
 } from "@/types/home";
 
 //获取首页banner图
@@ -54,5 +60,34 @@ export const getRankList = async (params: RequestRankList) => {
 //获取MV列表
 export const getMv = async (params: RequestMvList) => {
   const res: MvList | any = await http.get("/mv/all", params);
+  return res;
+};
+
+//获取热门搜索建议
+export const getHotSearchList = async () => {
+  const res: SearchHotList | any = await http.get("/search/hot");
+  return res;
+};
+
+//获取搜索建议
+export const getSearchSuggestionList = async (
+  params: RequestSearchSuggestionList
+) => {
+  const res: SearchSuggestionList | any = await http.get(
+    "/search/suggest",
+    params
+  );
+  return res;
+};
+
+//获取热门电台数据
+export const getHotRadioList = async (params: RequestHotRadioList) => {
+  const res: HotRadioList | any = await http.get("/dj/hot", params);
+  return res;
+};
+
+//获取热门歌手数据
+export const getHotSingerList = async (params: RequestHotRadioList) => {
+  const res: HotSingerList | any = await http.get("/top/artists", params);
   return res;
 };

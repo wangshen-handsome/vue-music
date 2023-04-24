@@ -24,11 +24,5 @@ const { bannerList, actionBannerList,bannerLoading } = toRefs(useHomeStore());
 actionBannerList.value();
 </script>
 <style scoped lang="scss">
-.banner,
-.skeleton,
-.img {
-  width: 100%;
-  height: 300px;
-  border-radius: 8px;
-}
+@import '@/styles/components/banner.scss'
 </style>

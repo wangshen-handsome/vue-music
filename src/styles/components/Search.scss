@@ -1,0 +1,21 @@
+.search {
+  max-width: 400px;
+  min-width: 250px;
+  margin-right: 20px;
+}
+.search-box {
+  .label {
+    padding-left: 20px;
+  }
+  @for $i from 0 through 2 {
+    .rank-#{$i} {
+      @if ($i == 0) {
+        color: #f40;
+      } @else if($i == 1) {
+        color: rgb(249, 109, 59);
+      } @else if($i == 2) {
+        color: rgb(249, 186, 163);
+      }
+    }
+  }
+}

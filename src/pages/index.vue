@@ -17,12 +17,5 @@ import Header from "@/components/header/Header.vue";
 import Left from "@/components/main/left/Left.vue";
 </script>
 <style scoped lang="scss">
-.common-layout {
-  .container {
-    height: calc(100vh - 60px);
-    .main::-webkit-scrollbar {
-      display: none;
-    }
-  }
-}
+@import "@/styles/pages/index.scss";
 </style>

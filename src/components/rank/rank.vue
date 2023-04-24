@@ -53,7 +53,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType, toRefs } from "vue";
+import { ref, PropType, toRefs } from "vue";
 
 import { getRankList } from "@/apis/api";
 
@@ -96,92 +96,5 @@ const timer = setInterval(() => {
 }, 1000);
 </script>
 <style scoped lang="scss">
-.rank {
-  display: flex;
-  justify-content: space-between;
-  .item {
-    border-radius: 8px;
-    width: calc(100% / 6 - 20px);
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
-    cursor: pointer;
-    .top {
-      padding: 10px;
-      .title {
-        font-size: 24px;
-        font-weight: 600;
-        padding-bottom: 5px;
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-      .desc {
-        font-size: 12px;
-        color: #909090;
-        overflow: hidden;
-        display: -webkit-box;
-        text-overflow: ellipsis;
-        -webkit-line-clamp: 1;
-        -webkit-box-orient: vertical;
-      }
-    }
-    .content {
-      display: flex;
-      // justify-content: space-around;
-      padding: 10px;
-      .img {
-        width: 48px;
-        height: 48px;
-        border-radius: 8px;
-        overflow: hidden;
-        margin-right: 5px;
-        transition: all 0.5s;
-        .el-image {
-          .el-image__inner {
-            border-radius: 8px;
-          }
-        }
-      }
-      &:hover {
-        .img {
-          transform: scale(1.1);
-        }
-      }
-      .image-slot {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        height: 100%;
-        background: #e6e8eb;
-        color: var(--el-text-color-secondary);
-        font-size: 30px;
-      }
-      .right {
-        display: flex;
-        flex: 1;
-        flex-direction: column;
-        justify-content: space-between;
-        .song {
-          overflow: hidden;
-          display: -webkit-box;
-          text-overflow: ellipsis;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-        }
-        .singer {
-          color: #909090;
-          overflow: hidden;
-          display: -webkit-box;
-          text-overflow: ellipsis;
-          -webkit-line-clamp: 1;
-          -webkit-box-orient: vertical;
-        }
-      }
-    }
-  }
-}
+@import "@/styles/components/rank.scss";
 </style>

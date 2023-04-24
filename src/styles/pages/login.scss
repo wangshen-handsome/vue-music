@@ -1,0 +1,30 @@
+.shade {
+  width: 100%;
+  height: 100vh;
+  background: url("https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fsafe-img.xhscdn.com%2Fbw1%2F4b190939-06e4-4900-a83b-891e4e4593cb%3FimageView2%2F2%2Fw%2F1080%2Fformat%2Fjpg&refer=http%3A%2F%2Fsafe-img.xhscdn.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=auto?sec=1684475160&t=6fb2cdbf44447b05ea6b1c353ee0b3f4");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  .login {
+    width: 30vw;
+    height: 40vh;
+    background-color: #fff;
+    margin: auto;
+    transform: translateY(50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .logo {
+      text-align: center;
+      font-weight: 600;
+      font-family: Tahoma;
+      font-size: 24px;
+      color: #409eff;
+      padding: 30px 0;
+    }
+    .form-item {
+      width: 90%;
+      margin-bottom: 30px;
+    }
+  }
+}

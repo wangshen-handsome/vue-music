@@ -109,9 +109,78 @@ export type RequestMvList = {
   offset: number;
 };
 
+/**
+ * @description:
+ * @return {*}
+ */
 export type MvList = {
   code: number;
   data: any[];
   hasMore: boolean;
   count: number;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type SearchHotList = {
+  code: number;
+  result: {
+    hots: any[];
+  };
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type RequestSearchSuggestionList = {
+  keywords: string;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type SearchSuggestionList = {
+  code: number;
+  result: R;
+};
+
+export type R = {
+  albums: any[];
+  artists: any[];
+  order: any[];
+  playlists: any[];
+  songs: any[];
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type RequestHotRadioList = {
+  limit: number;
+  offset: number;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type HotRadioList = {
+  code: number;
+  djRadios: any[];
+  hasMore: boolean;
+};
+
+/**
+ * @description:
+ * @return {*}
+ */
+export type HotSingerList = {
+  code: number;
+  artists: any[];
+  more: boolean;
 };

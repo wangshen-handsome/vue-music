@@ -57,6 +57,34 @@
         <mv-list :count="mvData.limit" :list="mvList" :loading="mvLoading"></mv-list>
       </div>
     </div>
+    <div class="bottom">
+      <!-- 热门电台 -->
+      <div class="hot" style="width: calc(50% - 10px); margin-right: 20px">
+        <div class="top">
+          <h3 class="title">热门电台</h3>
+        </div>
+        <div class="main">
+          <hot-radio-list
+            :count="hotRadioData.limit"
+            :list="hotRadioList"
+            :loading="hotRadioLoading"
+          ></hot-radio-list>
+        </div>
+      </div>
+      <!-- 热门歌手 -->
+      <div class="hot" style="width: calc(50% - 10px)">
+        <div class="top">
+          <h3 class="title">热门歌手</h3>
+        </div>
+        <div class="main">
+          <hot-singer-list
+            :count="hotSingerListData.limit"
+            :list="hotSingerList"
+            :loading="hotSingerListLoading"
+          ></hot-singer-list>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
@@ -67,6 +95,10 @@ import Banner from "@/components/banner/banner.vue";
 import HotList from "@/components/hotList/hotList.vue";
 
 import MvList from "@/components/mvList/mvList.vue";
+
+import HotRadioList from "@/components/hotRadioList/hotRadioList.vue";
+
+import HotSingerList from "@/components/hotSingerList/hotSingerList.vue";
 
 import { useHomeStore } from "@/store/home";
 
@@ -87,6 +119,14 @@ let {
   mvData,
   mvList,
   mvLoading,
+  actionHotRadioList,
+  hotRadioData,
+  hotRadioList,
+  hotRadioLoading,
+  actionHotSingerList,
+  hotSingerList,
+  hotSingerListData,
+  hotSingerListLoading,
 } = toRefs(useHomeStore());
 
 //hotTag栏选中下标
@@ -147,37 +187,11 @@ actionNewDiscList.value();
 actionRank.value();
 //请求MV
 actionMvList.value();
+//请求热门电台数据
+actionHotRadioList.value();
+//请求热门歌手数据
+actionHotSingerList.value();
 </script>
 <style scoped lang="scss">
-.hot {
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
-  margin: 50px 0;
-  .top {
-    display: flex;
-    align-items: center;
-    .title {
-      font-size: 28px;
-      font-weight: 700;
-    }
-    .title,
-    .item-title {
-      margin-right: 50px;
-    }
-    .item-title {
-      cursor: pointer;
-      transition: all 0.3s;
-      &:hover {
-        transform: translateY(-2px);
-        color: #409eff;
-      }
-    }
-    .active {
-      border-bottom: 3px solid #409eff;
-      font-weight: 700;
-      color: #409eff;
-    }
-  }
-}
+@import "@/styles/views/index.scss";
 </style>

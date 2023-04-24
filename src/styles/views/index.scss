@@ -1,0 +1,35 @@
+.hot {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
+    margin: 50px 0;
+    .top {
+      display: flex;
+      align-items: center;
+      .title {
+        font-size: 28px;
+        font-weight: 700;
+      }
+      .title,
+      .item-title {
+        margin-right: 50px;
+      }
+      .item-title {
+        cursor: pointer;
+        transition: all 0.3s;
+        &:hover {
+          transform: translateY(-2px);
+          color: #409eff;
+        }
+      }
+      .active {
+        border-bottom: 3px solid #409eff;
+        font-weight: 700;
+        color: #409eff;
+      }
+    }
+  }
+
+  .bottom{
+    display: flex;
+  }

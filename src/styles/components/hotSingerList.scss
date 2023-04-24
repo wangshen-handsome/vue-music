@@ -1,0 +1,17 @@
+.hot-singer-list {
+  width: 100%;
+  .content {
+    .item {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      /*  声明行间距和列间距  */
+      grid-gap: 10px;
+      box-sizing: border-box;
+      .img {
+        width: 100px;
+        height: 100px;
+        cursor: pointer;
+      }
+    }
+  }
+}

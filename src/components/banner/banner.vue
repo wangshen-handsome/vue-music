@@ -5,7 +5,7 @@
         <el-skeleton-item class="img" variant="image" />
       </template>
       <template #default>
-        <el-carousel trigger="click" class="img">
+        <el-carousel trigger="hover" class="img">
           <el-carousel-item v-for="item in bannerList" :key="item.imageUrl">
             <img :src="item.imageUrl" class="img" />
           </el-carousel-item>

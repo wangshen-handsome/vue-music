@@ -19,3 +19,10 @@ export const formatNum = (val: number | string) => {
 
   return num;
 };
+
+export const formatSongTime = (duration: number = 0): string => {
+  duration = duration >= 0 ? duration / 1000 : 0;
+  const m = (Math.floor(duration / 60) + "").padStart(2, "0");
+  const s = (Math.floor(duration % 60) + "").padStart(2, "0");
+  return `${m}:${s}`;
+};

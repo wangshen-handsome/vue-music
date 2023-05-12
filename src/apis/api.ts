@@ -20,6 +20,8 @@ import {
   HotSingerList,
 } from "@/types/home";
 
+import { TopList, PlayData, PlayList } from "@/types/rankList";
+
 //获取首页banner图
 export const getBanner = async () => {
   const res: Banner | any = await http.get("/banner");
@@ -89,5 +91,17 @@ export const getHotRadioList = async (params: RequestHotRadioList) => {
 //获取热门歌手数据
 export const getHotSingerList = async (params: RequestHotRadioList) => {
   const res: HotSingerList | any = await http.get("/top/artists", params);
+  return res;
+};
+
+//获取榜单
+export const getTopList = async () => {
+  const res: TopList | any = await http.get("/toplist/detail");
+  return res;
+};
+
+//获取歌曲列表
+export const getPlayList = async (params: PlayData) => {
+  const res: PlayList | any = await http.get("/playlist/detail", params);
   return res;
 };

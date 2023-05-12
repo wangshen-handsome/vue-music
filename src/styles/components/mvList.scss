@@ -10,12 +10,23 @@
     box-sizing: border-box;
     overflow: hidden;
     cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      transform: translateY(-3px);
+
+      .img {
+        .play {
+          opacity: 1;
+          transform: translate(-50%, -50%) scale(2);
+        }
+      }
+    }
 
     .img {
       width: 100%;
       overflow: hidden;
       border-radius: 8px;
-      transition: all 0.5s;
       position: relative;
 
       .play {
@@ -24,7 +35,7 @@
         left: 50%;
         transform: translate(-50%, -50%) scale(0.5);
         opacity: 0;
-        transition: all .5s;
+        transition: all 0.5s;
       }
 
       .el-image {
@@ -32,15 +43,6 @@
 
         .el-image__inner {
           border-radius: 8px;
-        }
-      }
-
-      &:hover {
-        transform: scale(1.1);
-
-        .play {
-          opacity: 1;
-          transform: translate(-50%, -50%) scale(1.5);
         }
       }
     }

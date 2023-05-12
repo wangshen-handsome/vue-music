@@ -1,11 +1,4 @@
 <template>
-  <!--  <el-input-->
-  <!--    v-model="searchText"-->
-  <!--    class="search"-->
-  <!--    placeholder="请输入歌词、歌名、歌手或专辑"-->
-  <!--    @change="search"-->
-  <!--  />-->
-
   <el-select
     class="search"
     v-model="searchSuggestionData.keywords"
@@ -18,7 +11,7 @@
     loading-text="加载中..."
     @focus="handleFocus"
   >
-    <div class="search-box" v-if="!searchSuggestionList.order.length">
+    <div class="search-box" v-if="!searchSuggestionData.keywords">
       <h3 class="label">热门搜索</h3>
       <el-option
         v-for="(item, index) in searchHotList"
@@ -31,9 +24,58 @@
         >
       </el-option>
     </div>
-    <el-option-group v-else v-for="item in listType" :label="item" :key="item">
-      <el-option v-for="prop in item.value"></el-option>
-    </el-option-group>
+    <div v-else>
+      <el-option-group
+        v-for="item in searchSuggestionList.order"
+        :label="getTitle(item)"
+        :key="getTitle(item)"
+      >
+        <div v-if="item === 'songs'">
+          <el-option
+            v-for="prop in searchSuggestionList.songs"
+            :key="prop.id"
+            :label="prop.name"
+            :value="prop.name"
+          >
+            {{ prop.name }}-
+            <span v-for="(a, b) in prop.artists">{{
+              (b !== 0 ? "/" : "") + a.name
+            }}</span>
+          </el-option>
+        </div>
+        <div v-if="item === 'albums'">
+          <el-option
+            v-for="prop in searchSuggestionList.albums"
+            :key="prop.id"
+            :label="prop.name"
+            :value="prop.name"
+          >
+            {{ prop.name }}-
+            <span>{{ prop.artist.name }}</span>
+          </el-option>
+        </div>
+        <div v-if="item === 'artists'">
+          <el-option
+            v-for="prop in searchSuggestionList.artists"
+            :key="prop.id"
+            :label="prop.name"
+            :value="prop.name"
+          >
+            {{ prop.name }}
+          </el-option>
+        </div>
+        <div v-if="item === 'playlists'">
+          <el-option
+            v-for="prop in searchSuggestionList.playlists"
+            :key="prop.id"
+            :label="prop.name"
+            :value="prop.name"
+          >
+            {{ prop.name }}
+          </el-option>
+        </div>
+      </el-option-group>
+    </div>
   </el-select>
 </template>
 <script setup lang="ts">
@@ -47,7 +89,6 @@ const {
   searchSuggestionList,
   searchSuggestionData,
   actionSearchSuggestionList,
-  listType,
   searchHotListLoading,
 } = toRefs(useHomeStore());
 
@@ -58,16 +99,41 @@ const remoteMethod = (query: string) => {
     actionSearchSuggestionList.value();
   } else {
     searchHotList.value = [];
+    searchSuggestionData.value.keywords = "";
+    handleFocus();
   }
 };
 //搜索框得焦事件
 const handleFocus = () => {
   actionSearchHotList.value();
+  searchSuggestionList.value = {
+    albums: [],
+    artists: [],
+    order: [],
+    playlists: [],
+    songs: [],
+  };
 };
 //提交搜索
 // const search = () => {
 //     console.log(searchText.value);
 // };
+
+//获取类别
+const getTitle = (name: string) => {
+  switch (name) {
+    case "songs":
+      return "单曲";
+    case "albums":
+      return "专辑";
+    case "artists":
+      return "歌手";
+    case "playlists":
+      return "歌单";
+    default:
+      return name;
+  }
+};
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/Search.scss";

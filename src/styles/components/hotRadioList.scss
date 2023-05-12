@@ -3,18 +3,18 @@
   justify-content: space-around;
   flex-wrap: wrap;
   .item {
-    width: calc(100% / 2 - 20px);
+    width: calc(100% / 4 - 20px);
     margin: 20px 20px 20px 0;
     box-sizing: border-box;
     overflow: hidden;
     cursor: pointer;
     display: flex;
+    transition: all 0.5s;
     .img {
       width: 100px;
       height: 100px;
       overflow: hidden;
       border-radius: 8px;
-      transition: all 0.5s;
       margin-right: 10px;
       .el-image {
         border-radius: 8px;
@@ -54,9 +54,7 @@
       }
     }
     &:hover {
-      .img {
-        transform: scale(1.1);
-      }
+      transform: translateY(-3px);
     }
   }
 }

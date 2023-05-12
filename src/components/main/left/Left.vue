@@ -5,7 +5,7 @@
         :class="[index === activeIndex ? 'active item' : 'item']"
         v-for="(item, index) in menuList"
         :key="item.id"
-        @click="menuClick(index, item.name)"
+        @click="menuClick(item.name)"
       >
         <span class="icon" v-html="item.icon"></span>
         {{ item.title }}
@@ -14,23 +14,26 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive } from "vue";
+import { ref, reactive, computed } from "vue";
 
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 import { menuList } from "./menuList";
 
 const router = useRouter();
 
-//选中的下标
-let activeIndex = ref<number | string>(0);
+const route = useRoute();
+
+//菜单下标
+const activeIndex = computed(() =>
+  route.path ? menuList.findIndex((item) => item.name === route.path) : 0
+);
 
 //菜单栏点击事件
-const menuClick = (index: number, title: string) => {
-  activeIndex.value = index;
+const menuClick = (title: string) => {
   router.push(title);
 };
 </script>
 <style scoped lang="scss">
-@import '@/styles/components/Left.scss'
+@import "@/styles/components/Left.scss";
 </style>

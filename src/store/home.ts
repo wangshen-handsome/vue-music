@@ -41,13 +41,12 @@ type S = {
   searchHotListLoading: boolean;
   searchSuggestionList: R;
   searchSuggestionData: RequestSearchSuggestionList;
-  listType: any[];
   hotRadioList: any[];
   hotRadioData: RequestHotRadioList;
   hotRadioLoading: boolean;
-  hotSingerList: any[];
-  hotSingerListData: RequestHotRadioList;
-  hotSingerListLoading: boolean;
+  // hotSingerList: any[];
+  // hotSingerListData: RequestHotRadioList;
+  // hotSingerListLoading: boolean;
 };
 
 export const useHomeStore = defineStore({
@@ -75,7 +74,7 @@ export const useHomeStore = defineStore({
       newDiscData: {
         limit: 18,
         offset: 0,
-        area: "全部",
+        area: "all",
         type: "new",
         year: "",
         month: "",
@@ -116,22 +115,21 @@ export const useHomeStore = defineStore({
       searchSuggestionData: {
         keywords: "",
       },
-      listType: ["单曲", "歌手", "专辑", "歌单"],
       //热门电台数据
       hotRadioList: [],
       //热门电台请求数据
       hotRadioData: {
         offset: 0,
-        limit: 6,
+        limit: 12,
       },
       //热门电台加载状态
       hotRadioLoading: false,
-      hotSingerList: [],
-      hotSingerListData: {
-        offset: 0,
-        limit: 36,
-      },
-      hotSingerListLoading: false,
+      // hotSingerList: [],
+      // hotSingerListData: {
+      //   offset: 0,
+      //   limit: 36,
+      // },
+      // hotSingerListLoading: false,
     };
   },
   actions: {
@@ -191,7 +189,9 @@ export const useHomeStore = defineStore({
       }
     },
     async actionSearchSuggestionList() {
+      this.searchHotListLoading = true;
       let res = await getSearchSuggestionList(this.searchSuggestionData);
+      this.searchHotListLoading = false;
       this.searchSuggestionList = res.result;
     },
     async actionHotRadioList() {
@@ -202,26 +202,26 @@ export const useHomeStore = defineStore({
         this.hotRadioList.push(...res.djRadios);
       }
     },
-    async actionHotSingerList() {
-      if (!this.hotSingerList.length) {
-        this.hotSingerListLoading = true;
-        let res = await getHotSingerList(this.hotSingerListData);
-        this.hotSingerListLoading = false;
-        let num: number = 0;
-        let arr: any[] = [];
-        let data: any[] = [];
-        res.artists.forEach((item: any) => {
-          if (num === 9) {
-            arr.push(data);
-            data = [];
-            num = 0;
-          } else {
-            data.push(item);
-            num++;
-          }
-        });
-        this.hotSingerList.push(...arr);
-      }
-    },
+    // async actionHotSingerList() {
+    //   if (!this.hotSingerList.length) {
+    //     this.hotSingerListLoading = true;
+    //     let res = await getHotSingerList(this.hotSingerListData);
+    //     this.hotSingerListLoading = false;
+    //     let num: number = 0;
+    //     let arr: any[] = [];
+    //     let data: any[] = [];
+    //     res.artists.forEach((item: any) => {
+    //       if (num === 9) {
+    //         arr.push(data);
+    //         data = [];
+    //         num = 0;
+    //       } else {
+    //         data.push(item);
+    //         num++;
+    //       }
+    //     });
+    //     this.hotSingerList.push(...arr);
+    //   }
+    // },
   },
 });

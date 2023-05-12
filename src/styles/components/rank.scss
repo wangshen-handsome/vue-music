@@ -34,13 +34,13 @@
       display: flex;
       // justify-content: space-around;
       padding: 10px;
+      transition: all 0.5s;
       .img {
         width: 48px;
         height: 48px;
         border-radius: 8px;
         overflow: hidden;
         margin-right: 5px;
-        transition: all 0.5s;
         .el-image {
           .el-image__inner {
             border-radius: 8px;
@@ -48,9 +48,7 @@
         }
       }
       &:hover {
-        .img {
-          transform: scale(1.1);
-        }
+        transform: translateY(-3px);
       }
       .image-slot {
         display: flex;

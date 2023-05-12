@@ -4,6 +4,7 @@
   justify-content: space-around;
   .item {
     width: calc(100% / 6 - 20px);
+    transition: all 0.5s;
     box-sizing: border-box;
     overflow: hidden;
     cursor: pointer;
@@ -11,7 +12,6 @@
       width: 100%;
       overflow: hidden;
       border-radius: 8px;
-      transition: all 0.5s;
       .el-image {
         border-radius: 8px;
         .el-image__inner {
@@ -48,9 +48,7 @@
     }
 
     &:hover {
-      .img {
-        transform: scale(1.1);
-      }
+      transform: translateY(-3px);
     }
   }
 }

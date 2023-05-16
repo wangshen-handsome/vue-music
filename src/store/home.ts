@@ -22,7 +22,7 @@ import {
   RequestHotRadioList,
 } from "@/types/home";
 
-type S = {
+interface S {
   hotTagList: any[];
   bannerList: any[];
   bannerLoading: boolean;
@@ -47,7 +47,7 @@ type S = {
   // hotSingerList: any[];
   // hotSingerListData: RequestHotRadioList;
   // hotSingerListLoading: boolean;
-};
+}
 
 export const useHomeStore = defineStore({
   id: "homeStore",

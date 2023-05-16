@@ -1,9 +1,9 @@
 .hot-list {
   // background-color: #fafafa;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
   .item {
-    width: calc(100% / 6 - 20px);
     transition: all 0.5s;
     box-sizing: border-box;
     overflow: hidden;

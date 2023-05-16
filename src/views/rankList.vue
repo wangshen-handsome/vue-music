@@ -1,5 +1,5 @@
 <template>
-  <div class="rank-list">
+  <div class="rank-list" v-if="!playListLoading">
     <div class="top">
       <div class="top-left">
         <div class="left">
@@ -110,14 +110,17 @@
           <div class="text">全部播放</div>
         </div>
       </div>
-      <songList :list="playList" v-if="!playListLoading"></songList>
+      <songList :list="playList"></songList>
     </div>
   </div>
+  <loading v-else></loading>
 </template>
 <script setup lang="ts">
 import { ref, reactive, toRefs, computed } from "vue";
 
 import songList from "@/components/songList/songList.vue";
+
+import loading from '@/components/loading/index.vue'
 
 import { PlayOne } from "@icon-park/vue-next";
 

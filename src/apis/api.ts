@@ -22,6 +22,8 @@ import {
 
 import { TopList, PlayData, PlayList } from "@/types/rankList";
 
+import { CatList, TopPlayList,TopPlayData } from "@/types/songList";
+
 //获取首页banner图
 export const getBanner = async () => {
   const res: Banner | any = await http.get("/banner");
@@ -103,5 +105,17 @@ export const getTopList = async () => {
 //获取歌曲列表
 export const getPlayList = async (params: PlayData) => {
   const res: PlayList | any = await http.get("/playlist/detail", params);
+  return res;
+};
+
+//获取歌单分类
+export const getCatList = async () => {
+  const res: CatList | any = await http.get("/playlist/catlist");
+  return res;
+};
+
+//获取歌单列表
+export const getTopPlayList = async (params:TopPlayData) => {
+  const res: TopPlayList | any = await http.get("/top/playlist",params);
   return res;
 };

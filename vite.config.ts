@@ -7,7 +7,6 @@ import { ElementPlusResolver } from "unplugin-vue-components/resolvers";
 import { resolve } from "path";
 
 export default defineConfig({
-  // ...
   plugins: [
     vue(),
     vueJsx(),

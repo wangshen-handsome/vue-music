@@ -1,22 +1,22 @@
 <template>
-  <div class="hot-radio-list">
-    <el-skeleton class="hot-radio-list" :count="count" :loading="loading" animated>
-      <template #template>
-        <div class="item">
-          <el-skeleton-item class="img" variant="image" />
-          <div class="text">
-            <div class="title">
-              <el-skeleton-item variant="h3" class="ske-name" />
-            </div>
-            <el-skeleton-item variant="text" />
-            <div class="bottom">
-              <el-skeleton-item variant="text" class="ske-name" style="width: 50%" />
-              <el-skeleton-item variant="text" class="ske-name" style="width: 50%" />
-            </div>
+  <el-skeleton class="hot-radio-list" :count="count" :loading="loading" animated>
+    <template #template>
+      <div class="item">
+        <el-skeleton-item class="img" variant="image" />
+        <div class="text">
+          <div class="title">
+            <el-skeleton-item variant="h3" class="ske-name" />
+          </div>
+          <el-skeleton-item variant="text" />
+          <div class="bottom">
+            <el-skeleton-item variant="text" class="ske-name" style="width: 50%" />
+            <el-skeleton-item variant="text" class="ske-name" style="width: 50%" />
           </div>
         </div>
-      </template>
-      <template #default>
+      </div>
+    </template>
+    <template #default>
+      <div class="hot-radio-list" v-if="list && list.length">
         <div class="item" v-for="item in list" :key="item.id">
           <el-image :src="item.picUrl" class="img"></el-image>
           <div class="text">
@@ -31,9 +31,10 @@
             </div>
           </div>
         </div>
-      </template>
-    </el-skeleton>
-  </div>
+      </div>
+      <el-empty class="error" description="数据请求失败,请刷新重试" v-else></el-empty>
+    </template>
+  </el-skeleton>
 </template>
 <script setup lang="ts">
 import { ref, reactive, PropType } from "vue";
@@ -41,6 +42,9 @@ import { ref, reactive, PropType } from "vue";
 import { Fm } from "@icon-park/vue-next";
 
 import { formatNum } from "@/utils/format";
+
+import { ElEmpty } from "element-plus";
+
 defineProps({
   count: Number,
   loading: Boolean,

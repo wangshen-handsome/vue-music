@@ -1,0 +1,32 @@
+.top {
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
+  margin: 20px 0;
+}
+
+.content {
+  .nav {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    .title {
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .hot {
+      margin: 0 20px;
+    }
+    .hot,
+    .new {
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .active {
+      border-bottom: 2px solid #409eff;
+    }
+  }
+  .bottom {
+    height: 30px;
+  }
+}

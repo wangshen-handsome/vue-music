@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import("@/views/rankList.vue"),
       },
       {
-        path: "/song",
+        path: "/songList",
         component: () => import("@/views/songList.vue"),
       },
       {

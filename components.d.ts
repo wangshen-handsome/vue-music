@@ -10,11 +10,15 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Banner: typeof import('./src/components/banner/banner.vue')['default']
+    Category: typeof import('./src/components/category/category.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCarousel: typeof import('element-plus/es')['ElCarousel']
     ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElContainer: typeof import('element-plus/es')['ElContainer']
+    ElEmpty: typeof import('element-plus/es')['ElEmpty']
+    ElForm: typeof import('element-plus/es')['ElForm']
+    ElFormItem: typeof import('element-plus/es')['ElFormItem']
     ElHeader: typeof import('element-plus/es')['ElHeader']
     ElIcon: typeof import('element-plus/es')['ElIcon']
     ElImag: typeof import('element-plus/es')['ElImag']
@@ -24,6 +28,7 @@ declare module '@vue/runtime-core' {
     ElOption: typeof import('element-plus/es')['ElOption']
     ElOptionGroup: typeof import('element-plus/es')['ElOptionGroup']
     ElPagination: typeof import('element-plus/es')['ElPagination']
+    ElPopover: typeof import('element-plus/es')['ElPopover']
     ElSelect: typeof import('element-plus/es')['ElSelect']
     ElSkeleton: typeof import('element-plus/es')['ElSkeleton']
     ElSkeletonItem: typeof import('element-plus/es')['ElSkeletonItem']
@@ -35,6 +40,8 @@ declare module '@vue/runtime-core' {
     HotRadioList: typeof import('./src/components/hotRadioList/hotRadioList.vue')['default']
     HotSingerList: typeof import('./src/components/hotSingerList/hotSingerList.vue')['default']
     Left: typeof import('./src/components/main/left/Left.vue')['default']
+    List: typeof import('./src/components/category/list.vue')['default']
+    Loading: typeof import('./src/components/loading/index.vue')['default']
     MvList: typeof import('./src/components/mvList/mvList.vue')['default']
     NewDisc: typeof import('./src/components/newDisc/newDisc.vue')['default']
     Rank: typeof import('./src/components/rank/rank.vue')['default']
@@ -42,5 +49,9 @@ declare module '@vue/runtime-core' {
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./src/components/header/Search.vue')['default']
     SongList: typeof import('./src/components/songList/songList.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vInfiniteScroll: typeof import('element-plus/es')['ElInfiniteScroll']
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

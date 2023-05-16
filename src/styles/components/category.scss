@@ -1,0 +1,25 @@
+.category {
+  width: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  .title {
+    font-size: 24;
+    font-weight: 600;
+  }
+  .item {
+    width: calc(20% - 20px);
+    .content {
+      padding: 10px 0;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      grid-gap: 20px;
+      .tag {
+        cursor: pointer;
+      }
+    }
+  }
+}
+.span {
+  margin: 5px;
+  cursor: pointer;
+}

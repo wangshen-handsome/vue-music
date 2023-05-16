@@ -39,7 +39,7 @@
     </div>
     <!-- 排行榜 -->
     <div class="rank">
-      <Rank :rank="rank"></Rank>
+      <Rank :list="rank"></Rank>
     </div>
     <!-- 最新MV -->
     <div class="hot">

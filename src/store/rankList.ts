@@ -7,7 +7,7 @@ import { formatSongTime } from "@/utils/format";
 
 import { PlayData } from "@/types/rankList";
 
-type S = {
+interface S {
   listTop: any[];
   listFeature: any[];
   listOther: any[];
@@ -15,7 +15,7 @@ type S = {
   playData: PlayData;
   playListLoading: boolean;
   list: any[];
-};
+}
 
 export const useRankStore = defineStore({
   id: "rankStore",
@@ -67,6 +67,14 @@ export const useRankStore = defineStore({
             : num === 1
             ? this.listFeature[0].id
             : this.listOther[0].id;
+      }
+      if (
+        this.playList.num &&
+        this.playList.nickname &&
+        this.playList.avatarUrl
+      ) {
+        this.playListLoading = false;
+        return;
       }
       let res = await getPlayList(this.playData);
       this.playListLoading = false;

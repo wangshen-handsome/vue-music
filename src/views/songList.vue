@@ -1,6 +1,6 @@
 <template>
   <div class="top">
-    <category :list="catList"></category>
+    <category :list="catList" :typeName="typeName" @changeCat="changeCat"></category>
   </div>
   <div class="content">
     <div class="nav">
@@ -26,7 +26,7 @@
     >
       <hot-list
         :list="topPlayList"
-        :count="48"
+        :count="topPlayData.limit"
         :loading="topPlayLoading && topPlayData.offset === 0"
       ></hot-list>
     </div>
@@ -44,8 +44,6 @@ import category from "@/components/category/category.vue";
 import hotList from "@/components/hotList/hotList.vue";
 
 import loading from "@/components/loading/index.vue";
-
-import { ElCard } from "element-plus";
 
 import { useSongStore } from "@/store/songList";
 
@@ -71,6 +69,15 @@ const loadMore = () => {
   topPlayData.value.offset = topPlayList.value.length;
 
   actionTopPlayList.value(true);
+};
+
+//分类名称
+let typeName = ref<number>();
+
+//分类点击事件
+const changeCat = (prop: any) => {
+  topPlayData.value.cat = typeName.value = prop.name;
+  actionTopPlayList.value();
 };
 
 //请求分类数据

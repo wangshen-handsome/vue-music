@@ -114,6 +114,8 @@ import HotSingerList from "@/components/hotSingerList/hotSingerList.vue";
 
 import { useHomeStore } from "@/store/home";
 
+import { useSongStore } from "@/store/songList";
+
 let {
   hotTagList,
   actionHotTagList,
@@ -134,11 +136,7 @@ let {
   actionHotRadioList,
   hotRadioData,
   hotRadioList,
-  hotRadioLoading,
-  // actionHotSingerList,
-  // hotSingerList,
-  // hotSingerListData,
-  // hotSingerListLoading,
+  hotRadioLoading
 } = toRefs(useHomeStore());
 
 //hotTag栏选中下标

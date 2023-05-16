@@ -22,7 +22,9 @@ import {
 
 import { TopList, PlayData, PlayList } from "@/types/rankList";
 
-import { CatList, TopPlayList,TopPlayData } from "@/types/songList";
+import { CatList, TopPlayList, TopPlayData } from "@/types/songList";
+
+import { MvData } from "@/types/mv";
 
 //获取首页banner图
 export const getBanner = async () => {
@@ -115,7 +117,13 @@ export const getCatList = async () => {
 };
 
 //获取歌单列表
-export const getTopPlayList = async (params:TopPlayData) => {
-  const res: TopPlayList | any = await http.get("/top/playlist",params);
+export const getTopPlayList = async (params: TopPlayData) => {
+  const res: TopPlayList | any = await http.get("/top/playlist", params);
+  return res;
+};
+
+//获取mv列表
+export const getMvList = async (params: MvData) => {
+  const res: MvList | any = await http.get("/mv/all", params);
   return res;
 };

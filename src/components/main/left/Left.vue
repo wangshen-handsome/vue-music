@@ -18,7 +18,7 @@ import { ref, reactive, computed } from "vue";
 
 import { useRouter, useRoute } from "vue-router";
 
-import { menuList } from "./menuList";
+import { menuList } from "@/assets/data/menuList";
 
 const router = useRouter();
 

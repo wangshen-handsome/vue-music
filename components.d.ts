@@ -48,6 +48,8 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Search: typeof import('./src/components/header/Search.vue')['default']
+    Singer: typeof import('./src/components/singerList/singer.vue')['default']
+    SingerList: typeof import('./src/components/singerList/singerList.vue')['default']
     SongList: typeof import('./src/components/songList/songList.vue')['default']
   }
   export interface ComponentCustomProperties {

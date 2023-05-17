@@ -3,13 +3,13 @@ import { defineStore } from "pinia";
 import {
   getBanner,
   getTags,
-  getHotList,
   getNewDiscList,
   getRank,
-  getMv,
+  getMvList,
   getHotSearchList,
   getSearchSuggestionList,
   getHotRadioList,
+  getTopPlayList,
   getHotSingerList,
 } from "@/apis/api";
 
@@ -44,9 +44,9 @@ interface S {
   hotRadioList: any[];
   hotRadioData: RequestHotRadioList;
   hotRadioLoading: boolean;
-  // hotSingerList: any[];
-  // hotSingerListData: RequestHotRadioList;
-  // hotSingerListLoading: boolean;
+  hotSingerList: any[];
+  hotSingerListData: RequestHotRadioList;
+  hotSingerListLoading: boolean;
 }
 
 export const useHomeStore = defineStore({
@@ -120,16 +120,16 @@ export const useHomeStore = defineStore({
       //热门电台请求数据
       hotRadioData: {
         offset: 0,
-        limit: 12,
+        limit: 9,
       },
       //热门电台加载状态
       hotRadioLoading: false,
-      // hotSingerList: [],
-      // hotSingerListData: {
-      //   offset: 0,
-      //   limit: 36,
-      // },
-      // hotSingerListLoading: false,
+      hotSingerList: [],
+      hotSingerListData: {
+        offset: 0,
+        limit: 36,
+      },
+      hotSingerListLoading: false,
     };
   },
   actions: {
@@ -151,7 +151,7 @@ export const useHomeStore = defineStore({
       if (!this.hotList.length || this.hotData.cat !== "") {
         this.hotList = [];
         this.hotLoading = true;
-        let res = await getHotList(this.hotData);
+        let res = await getTopPlayList(this.hotData);
         this.hotLoading = false;
         this.hotList.push(...res.playlists);
       }
@@ -175,7 +175,7 @@ export const useHomeStore = defineStore({
       if (!this.mvList.length || this.mvData.area) {
         this.mvLoading = true;
         this.mvList = [];
-        let res = await getMv(this.mvData);
+        let res = await getMvList(this.mvData);
         this.mvLoading = false;
         this.mvList.push(...res.data);
       }
@@ -202,26 +202,26 @@ export const useHomeStore = defineStore({
         this.hotRadioList.push(...res.djRadios);
       }
     },
-    // async actionHotSingerList() {
-    //   if (!this.hotSingerList.length) {
-    //     this.hotSingerListLoading = true;
-    //     let res = await getHotSingerList(this.hotSingerListData);
-    //     this.hotSingerListLoading = false;
-    //     let num: number = 0;
-    //     let arr: any[] = [];
-    //     let data: any[] = [];
-    //     res.artists.forEach((item: any) => {
-    //       if (num === 9) {
-    //         arr.push(data);
-    //         data = [];
-    //         num = 0;
-    //       } else {
-    //         data.push(item);
-    //         num++;
-    //       }
-    //     });
-    //     this.hotSingerList.push(...arr);
-    //   }
-    // },
+    async actionHotSingerList() {
+      if (!this.hotSingerList.length) {
+        this.hotSingerListLoading = true;
+        let res = await getHotSingerList(this.hotSingerListData);
+        this.hotSingerListLoading = false;
+        let num: number = 0;
+        let arr: any[] = [];
+        let data: any[] = [];
+        res.artists.forEach((item: any) => {
+          if (num === 9) {
+            arr.push(data);
+            data = [];
+            num = 0;
+          } else {
+            data.push(item);
+            num++;
+          }
+        });
+        this.hotSingerList.push(...arr);
+      }
+    },
   },
 });

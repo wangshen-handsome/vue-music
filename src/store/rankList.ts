@@ -14,7 +14,6 @@ interface S {
   playList: any;
   playData: PlayData;
   playListLoading: boolean;
-  list: any[];
 }
 
 export const useRankStore = defineStore({
@@ -35,7 +34,6 @@ export const useRankStore = defineStore({
         id: "",
       },
       playListLoading: true,
-      list: [],
     };
   },
   actions: {
@@ -68,20 +66,15 @@ export const useRankStore = defineStore({
             ? this.listFeature[0].id
             : this.listOther[0].id;
       }
-      if (
-        this.playList.num &&
-        this.playList.nickname &&
-        this.playList.avatarUrl
-      ) {
-        this.playListLoading = false;
-        return;
-      }
       let res = await getPlayList(this.playData);
+
       this.playListLoading = false;
       res.playlist.tracks.forEach((item: any, index: number) => {
         item.singer = item.ar[0].name;
         item.alName = item.al.name;
         item.songTime = formatSongTime(item.dt);
+        item.license = !res.privileges[index].cp;
+        item.vip = res.privileges[index].fee === 1;
         item.index = index + 1;
       });
       this.playList = {

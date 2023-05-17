@@ -18,7 +18,9 @@
     <template #default>
       <div class="hot-radio-list" v-if="list && list.length">
         <div class="item" v-for="item in list" :key="item.id">
-          <el-image :src="item.picUrl" class="img"></el-image>
+          <div class="img">
+            <el-image :src="item.picUrl"></el-image>
+          </div>
           <div class="text">
             <div class="title">
               <fm theme="outline" size="24" fill="#333" style="margin-right: 2px" />

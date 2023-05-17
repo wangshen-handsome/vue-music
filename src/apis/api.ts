@@ -1,16 +1,11 @@
 import http from "./http";
 
 import {
-  RequestHotData,
   Banner,
   Tags,
-  HotList,
   RequestNewDiscData,
   NewDiscList,
   Rank,
-  RequestRankList,
-  RankList,
-  RequestMvList,
   MvList,
   SearchHotList,
   RequestSearchSuggestionList,
@@ -26,6 +21,8 @@ import { CatList, TopPlayList, TopPlayData } from "@/types/songList";
 
 import { MvData } from "@/types/mv";
 
+import { SingerListData, SingerList } from "@/types/singer";
+
 //获取首页banner图
 export const getBanner = async () => {
   const res: Banner | any = await http.get("/banner");
@@ -38,12 +35,6 @@ export const getTags = async () => {
   return res;
 };
 
-//获取热门推荐列表
-export const getHotList = async (params: RequestHotData) => {
-  const res: HotList | any = await http.get("/top/playlist", params);
-  return res;
-};
-
 //获取新碟上架列表
 export const getNewDiscList = async (params: RequestNewDiscData) => {
   const res: NewDiscList | any = await http.get("/top/album", params);
@@ -53,19 +44,6 @@ export const getNewDiscList = async (params: RequestNewDiscData) => {
 //获取排行榜
 export const getRank = async () => {
   const res: Rank | any = await http.get("/toplist");
-  return res;
-};
-
-//获取排行榜列表
-export const getRankList = async (params: RequestRankList) => {
-  params.s = params.s ? params.s : 8;
-  const res: RankList | any = await http.get("/playlist/detail", params);
-  return res;
-};
-
-//获取MV列表
-export const getMv = async (params: RequestMvList) => {
-  const res: MvList | any = await http.get("/mv/all", params);
   return res;
 };
 
@@ -92,7 +70,7 @@ export const getHotRadioList = async (params: RequestHotRadioList) => {
   return res;
 };
 
-//获取热门歌手数据
+//获取歌手数据
 export const getHotSingerList = async (params: RequestHotRadioList) => {
   const res: HotSingerList | any = await http.get("/top/artists", params);
   return res;
@@ -125,5 +103,11 @@ export const getTopPlayList = async (params: TopPlayData) => {
 //获取mv列表
 export const getMvList = async (params: MvData) => {
   const res: MvList | any = await http.get("/mv/all", params);
+  return res;
+};
+
+//获取歌手信息
+export const getSingerList = async (params: SingerListData) => {
+  const res: SingerList | any = await http.get("/artist/list", params);
   return res;
 };

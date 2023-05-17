@@ -18,6 +18,7 @@
         :key="index"
         :label="item.first"
         :value="item.first"
+        @click="search(item)"
       >
         <span :class="[index < 3 ? `rank-${index}` : '']"
           >{{ index + 1 }} . {{ item.first }}</span
@@ -36,6 +37,7 @@
             :key="prop.id"
             :label="prop.name"
             :value="prop.name"
+            @click="search(prop)"
           >
             {{ prop.name }}-
             <span v-for="(a, b) in prop.artists">{{
@@ -115,9 +117,9 @@ const handleFocus = () => {
   };
 };
 //提交搜索
-// const search = () => {
-//     console.log(searchText.value);
-// };
+const search = (item: any) => {
+  console.log(item);
+};
 
 //获取类别
 const getTitle = (name: string) => {

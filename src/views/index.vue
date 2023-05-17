@@ -57,9 +57,9 @@
         <mv-list :count="mvData.limit" :list="mvList" :loading="mvLoading"></mv-list>
       </div>
     </div>
-    <!-- <div class="bottom"> -->
-    <!-- 热门电台 -->
-    <!-- <div class="hot" style="width: calc(50% - 10px); margin-right: 20px">
+    <div class="bottom">
+      <!-- 热门电台 -->
+      <div class="hot" style="width: calc(50% - 10px); margin-right: 20px">
         <div class="top">
           <h3 class="title">热门电台</h3>
         </div>
@@ -70,9 +70,9 @@
             :loading="hotRadioLoading"
           ></hot-radio-list>
         </div>
-      </div> -->
-    <!-- 热门歌手 -->
-    <!-- <div class="hot" style="width: calc(50% - 10px)">
+      </div>
+      <!-- 热门歌手 -->
+      <div class="hot" style="width: calc(50% - 10px)">
         <div class="top">
           <h3 class="title">热门歌手</h3>
         </div>
@@ -83,18 +83,6 @@
             :loading="hotSingerListLoading"
           ></hot-singer-list>
         </div>
-      </div> -->
-    <!-- </div> -->
-    <div class="hot">
-      <div class="top">
-        <h3 class="title">热门电台</h3>
-      </div>
-      <div class="main">
-        <hot-radio-list
-          :count="hotRadioData.limit"
-          :list="hotRadioList"
-          :loading="hotRadioLoading"
-        ></hot-radio-list>
       </div>
     </div>
   </div>
@@ -113,8 +101,6 @@ import HotRadioList from "@/components/hotRadioList/hotRadioList.vue";
 import HotSingerList from "@/components/hotSingerList/hotSingerList.vue";
 
 import { useHomeStore } from "@/store/home";
-
-import { useSongStore } from "@/store/songList";
 
 let {
   hotTagList,
@@ -136,7 +122,11 @@ let {
   actionHotRadioList,
   hotRadioData,
   hotRadioList,
-  hotRadioLoading
+  hotRadioLoading,
+  hotSingerListLoading,
+  hotSingerList,
+  actionHotSingerList,
+  hotSingerListData,
 } = toRefs(useHomeStore());
 
 //hotTag栏选中下标
@@ -200,7 +190,7 @@ actionMvList.value();
 //请求热门电台数据
 actionHotRadioList.value();
 //请求热门歌手数据
-// actionHotSingerList.value();
+actionHotSingerList.value();
 </script>
 <style scoped lang="scss">
 @import "@/styles/views/index.scss";

@@ -1,0 +1,69 @@
+.list {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  /*  声明行间距和列间距  */
+  grid-gap: 10px;
+  box-sizing: border-box;
+  .content {
+    margin: 5px 0;
+    display: flex;
+    cursor: pointer;
+    transition: all 0.5s;
+    .left {
+        margin-right: 30px;
+      .img {
+        width: 100px;
+        height: 100px;
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
+        margin-right: 5px;
+        .el-image {
+          width: 100%;
+          height: 100%;
+          border-radius: 8px;
+
+          .el-image__inner {
+            border-radius: 8px;
+          }
+        }
+      }
+    }
+    .right {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      .singer {
+        font-size: 24px;
+        padding-top: 5px;
+        overflow: hidden;
+        display: -webkit-box;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+      }
+      .bottom {
+        font-size: 12px;
+        color: #909090;
+        display: flex;
+        padding-bottom: 5px;
+        .album,
+        .single,
+        .fans {
+          display: flex;
+          flex-direction: column;
+          .num {
+            color: black;
+          }
+          .name,
+          .num {
+            margin-right: 5px;
+          }
+        }
+      }
+    }
+    &:hover {
+      transform: translateY(-3px);
+    }
+  }
+}

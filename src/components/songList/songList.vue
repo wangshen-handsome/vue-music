@@ -1,7 +1,13 @@
 <template>
   <el-table :data="list" class="table" @row-click="rowClick">
     <el-table-column prop="index" label="序号" width="80" align="center" />
-    <el-table-column show-overflow-tooltip prop="name" label="歌名" align="center" />
+    <el-table-column show-overflow-tooltip prop="name" label="歌名" align="center">
+      <template #default="{ row }">
+        <span>{{ row.name }}</span>
+        <span class="vip" v-if="row.vip">&emsp;VIP</span>
+        <span class="license" v-if="row.license">&emsp;暂无版权</span>
+      </template>
+    </el-table-column>
     <el-table-column show-overflow-tooltip prop="singer" label="歌手" align="center" />
     <el-table-column show-overflow-tooltip prop="alName" label="专辑" align="center" />
     <el-table-column prop="songTime" label="时长" width="100" align="center" />
@@ -18,11 +24,14 @@
   />
 </template>
 <script setup lang="ts">
-import { ref, toRefs, watch } from "vue";
+import { ref, watch, PropType } from "vue";
 
-import { useRankStore } from "@/store/rankList";
+const props = defineProps({
+  playList: Object as PropType<any>,
+});
 
-const { playList, list } = toRefs(useRankStore());
+//存放当前页数据
+let list = ref<any[]>([]);
 
 //页码
 const pageNum = ref<number>(1);
@@ -38,7 +47,7 @@ watch(pageNum, () => {
 
 //获取list
 const gainList = () => {
-  list.value = playList.value.tracks.slice((pageNum.value - 1) * 20, pageNum.value * 20);
+  list.value = props.playList.tracks.slice((pageNum.value - 1) * 20, pageNum.value * 20);
 };
 
 //行点击事件
@@ -55,5 +64,11 @@ gainList();
 }
 .page {
   padding: 10px 0;
+}
+.vip {
+  color: #409eff;
+}
+.license {
+  color: #f40;
 }
 </style>

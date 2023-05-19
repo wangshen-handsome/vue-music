@@ -1,8 +1,12 @@
 .common-layout {
-    .container {
-      height: calc(100vh - 60px);
-      .main::-webkit-scrollbar {
-        display: none;
-      }
+  .container {
+    height: calc(100vh - 60px);
+    .main::-webkit-scrollbar {
+      display: none;
+    }
+    .main {
+      margin-top: 80px;
+      transform: translateY(-80px);
     }
   }
+}

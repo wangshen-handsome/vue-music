@@ -13,7 +13,7 @@ defineProps({
 <style scoped lang="scss">
 .loading {
   width: 100%;
-  height: 100%;
+  height: auto;
   // background-color: #f40;
   .img {
     width: 30%;

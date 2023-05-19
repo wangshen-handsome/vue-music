@@ -6,6 +6,8 @@ import {
   RequestNewDiscData,
   NewDiscList,
   Rank,
+  RequestRankList,
+  RankList,
   MvList,
   SearchHotList,
   RequestSearchSuggestionList,
@@ -50,6 +52,13 @@ export const getRank = async () => {
 //获取热门搜索建议
 export const getHotSearchList = async () => {
   const res: SearchHotList | any = await http.get("/search/hot");
+  return res;
+};
+
+//获取排行榜列表
+export const getRankList = async (params: RequestRankList) => {
+  params.s = params.s ? params.s : 8;
+  const res: RankList | any = await http.get("/playlist/detail", params);
   return res;
 };
 

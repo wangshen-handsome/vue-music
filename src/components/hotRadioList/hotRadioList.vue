@@ -1,5 +1,11 @@
 <template>
-  <el-skeleton class="hot-radio-list" :count="count" :loading="loading" animated>
+  <el-skeleton
+    class="hot-radio-list"
+    :count="count"
+    :loading="loading"
+    animated
+    :throttle="500"
+  >
     <template #template>
       <div class="item">
         <el-skeleton-item class="img" variant="image" />

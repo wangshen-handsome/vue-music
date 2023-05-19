@@ -1,6 +1,19 @@
 <template>
-  <el-table :data="list" class="table" @row-click="rowClick">
-    <el-table-column prop="index" label="序号" width="80" align="center" />
+  <el-table
+    :data="list"
+    class="table"
+    @cell-mouse-enter="mouseEnter"
+    @cell-mouse-leave="mouseLeave"
+  >
+    <el-table-column prop="index" label="序号" width="80" align="center">
+      <template #default="{ row }">
+        <template v-if="row.index !== hoverIndex">{{ row.index }}</template>
+        <template v-else>
+          <pause-one @click="changeIsPlay" v-if="false" theme="filled" size="22" />
+          <play @click="clickPlayMusic(row)" v-else theme="filled" size="22" />
+        </template>
+      </template>
+    </el-table-column>
     <el-table-column show-overflow-tooltip prop="name" label="歌名" align="center">
       <template #default="{ row }">
         <span>{{ row.name }}</span>
@@ -24,7 +37,13 @@
   />
 </template>
 <script setup lang="ts">
-import { ref, watch, PropType } from "vue";
+import { ref, watch, PropType, toRefs } from "vue";
+
+import { Play, PauseOne } from "@icon-park/vue-next";
+
+import { usePlayBarStore } from "@/store/playBar";
+
+const { clickPlayMusic, changeIsPlay } = toRefs(usePlayBarStore());
 
 const props = defineProps({
   playList: Object as PropType<any>,
@@ -32,6 +51,9 @@ const props = defineProps({
 
 //存放当前页数据
 let list = ref<any[]>([]);
+
+//移入的下标
+let hoverIndex = ref<number>(-1);
 
 //页码
 const pageNum = ref<number>(1);
@@ -50,9 +72,14 @@ const gainList = () => {
   list.value = props.playList.tracks.slice((pageNum.value - 1) * 20, pageNum.value * 20);
 };
 
-//行点击事件
-const rowClick = (row: any, column: any, event: any) => {
-  console.log(row, column, event);
+//行移入事件
+const mouseEnter = (row: any) => {
+  hoverIndex.value = row.index;
+};
+
+//行移出事件
+const mouseLeave = () => {
+  hoverIndex.value = -1;
 };
 
 gainList();

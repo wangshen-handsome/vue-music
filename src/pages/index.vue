@@ -9,10 +9,12 @@
         </el-main>
       </el-container>
     </el-container>
+    <play-bar></play-bar>
   </div>
 </template>
 <script setup lang="ts">
 import { ref, reactive } from "vue";
+import playBar from "@/components/playBar/playBar.vue";
 import Header from "@/components/header/Header.vue";
 import Left from "@/components/main/left/Left.vue";
 </script>

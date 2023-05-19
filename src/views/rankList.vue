@@ -2,44 +2,7 @@
   <div class="rank-list" v-if="!playListLoading">
     <div class="top">
       <div class="top-left">
-        <div class="left">
-          <el-image class="img" :src="playList.coverImgUrl">
-            <div slot="placeholder" class="img">
-              <i class="iconfont icon-placeholder"></i>
-            </div>
-          </el-image>
-        </div>
-        <div class="right">
-          <div class="title">
-            <h3>{{ playList.name }}</h3>
-            <span class="date">({{ formatTime(playList.updateTime) }} 更新)</span>
-          </div>
-          <div class="create-date">
-            <el-image class="img" :src="playList.avatarUrl"> </el-image>
-            <span>{{ playList.nickname }}</span>
-            <span class="date">{{ formatTime(playList.createTime) }}</span>
-          </div>
-          <div class="play-count">
-            <div class="play">
-              <headset theme="outline" size="24" fill="#333" />
-              <span class="date">{{ formatNum(playList.playCount) }}次</span>
-            </div>
-            <div class="collect">
-              <star theme="outline" size="24" fill="#333" />
-              <span class="date">{{ formatNum(playList.subscribedCount) }}次</span>
-            </div>
-            <div class="message">
-              <message-one theme="outline" size="24" fill="#333" />
-              <span class="date">{{ formatNum(playList.commentCount) }}</span>
-            </div>
-          </div>
-          <div class="desc">
-            <h4>歌单简介</h4>
-            <div class="date content">
-              {{ playList.description }}
-            </div>
-          </div>
-        </div>
+        <hero :data="playList"></hero>
       </div>
       <div class="top-right">
         <div class="nav">
@@ -120,15 +83,13 @@ import { ref, reactive, toRefs, computed } from "vue";
 
 import songList from "@/components/songList/songList.vue";
 
+import hero from "@/components/hero/hero.vue";
+
 import loading from "@/components/loading/index.vue";
 
 import { PlayOne } from "@icon-park/vue-next";
 
 import { useRankStore } from "@/store/rankList";
-
-import { formatTime, formatNum } from "@/utils/format";
-
-import { Headset, Star, MessageOne } from "@icon-park/vue-next";
 
 const {
   actionPlayList,

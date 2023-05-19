@@ -100,6 +100,8 @@ import HotRadioList from "@/components/hotRadioList/hotRadioList.vue";
 
 import HotSingerList from "@/components/hotSingerList/hotSingerList.vue";
 
+import Rank from "@/components/rank/rank.vue";
+
 import { useHomeStore } from "@/store/home";
 
 let {

@@ -33,6 +33,12 @@ export const useSingerStore = defineStore({
 
       let res = await getSingerList(this.singerListData);
 
+      if (res.code === 400) {
+        this.singerList = [];
+        this.singerLoading = false;
+        return;
+      }
+
       this.singerLoading = false;
 
       this.singerList.push(...res.artists);

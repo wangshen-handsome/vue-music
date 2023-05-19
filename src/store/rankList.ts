@@ -3,7 +3,7 @@ import { defineStore } from "pinia";
 
 import { getTopList, getPlayList } from "@/apis/api";
 
-import { formatSongTime } from "@/utils/format";
+import { formSongList } from "@/utils/format";
 
 import { PlayData } from "@/types/rankList";
 
@@ -69,14 +69,7 @@ export const useRankStore = defineStore({
       let res = await getPlayList(this.playData);
 
       this.playListLoading = false;
-      res.playlist.tracks.forEach((item: any, index: number) => {
-        item.singer = item.ar[0].name;
-        item.alName = item.al.name;
-        item.songTime = formatSongTime(item.dt);
-        item.license = !res.privileges[index].cp;
-        item.vip = res.privileges[index].fee === 1;
-        item.index = index + 1;
-      });
+      res.playlist.tracks = formSongList(res.playlist.tracks, res.privileges);
       this.playList = {
         ...res.playlist,
         avatarUrl: res.playlist.creator.avatarUrl,

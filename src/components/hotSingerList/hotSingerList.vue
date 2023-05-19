@@ -1,5 +1,11 @@
 <template>
-  <el-skeleton class="hot-singer-list" :count="count" :loading="loading" animated>
+  <el-skeleton
+    class="hot-singer-list"
+    :count="count"
+    :loading="loading"
+    animated
+    :throttle="500"
+  >
     <template #template>
       <div class="item">
         <el-skeleton-item class="img" variant="image" />
@@ -13,7 +19,7 @@
           arrow="never"
           trigger="hover"
           height="390px"
-          :autoplay="false"
+          autoplay
         >
           <el-carousel-item class="item" v-for="item in list" :key="item.id">
             <div class="img" v-for="prop in item">

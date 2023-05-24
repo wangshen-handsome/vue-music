@@ -1,40 +1,52 @@
 <template>
-  <el-table
-    :data="list"
-    class="table"
-    @cell-mouse-enter="mouseEnter"
-    @cell-mouse-leave="mouseLeave"
-  >
-    <el-table-column prop="index" label="序号" width="80" align="center">
-      <template #default="{ row }">
-        <template v-if="row.index !== hoverIndex">{{ row.index }}</template>
-        <template v-else>
-          <pause-one @click="changeIsPlay" v-if="false" theme="filled" size="22" />
-          <play @click="clickPlayMusic(row)" v-else theme="filled" size="22" />
+  <div class="list">
+    <div class="header">
+      <div class="left">
+        <div class="title">歌曲列表</div>
+        <div class="num">{{ playList.num }}首歌</div>
+      </div>
+      <div class="right">
+        <play-one class="icon" theme="filled" size="24" fill="#fff" />
+        <div class="text">全部播放</div>
+      </div>
+    </div>
+    <el-table
+      :data="list"
+      class="table"
+      @cell-mouse-enter="mouseEnter"
+      @cell-mouse-leave="mouseLeave"
+    >
+      <el-table-column prop="index" label="序号" width="80" align="center">
+        <template #default="{ row }">
+          <template v-if="row.index !== hoverIndex">{{ row.index }}</template>
+          <template v-else>
+            <pause-one @click="changeIsPlay" v-if="false" theme="filled" size="22" />
+            <play @click="clickPlayMusic(row)" v-else theme="filled" size="22" />
+          </template>
         </template>
-      </template>
-    </el-table-column>
-    <el-table-column show-overflow-tooltip prop="name" label="歌名" align="center">
-      <template #default="{ row }">
-        <span>{{ row.name }}</span>
-        <span class="vip" v-if="row.vip">&emsp;VIP</span>
-        <span class="license" v-if="row.license">&emsp;暂无版权</span>
-      </template>
-    </el-table-column>
-    <el-table-column show-overflow-tooltip prop="singer" label="歌手" align="center" />
-    <el-table-column show-overflow-tooltip prop="alName" label="专辑" align="center" />
-    <el-table-column prop="songTime" label="时长" width="100" align="center" />
-  </el-table>
-  <el-pagination
-    class="page"
-    :page-size="20"
-    layout="prev, pager, next"
-    :total="playList.num"
-    @size-change="changePageNum"
-    @current-change="changePageNum"
-    @prev-click="changePageNum"
-    @next-click="changePageNum"
-  />
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="name" label="歌名" align="center">
+        <template #default="{ row }">
+          <span>{{ row.name }}</span>
+          <span class="vip" v-if="row.vip">&emsp;VIP</span>
+          <span class="license" v-if="row.license">&emsp;暂无版权</span>
+        </template>
+      </el-table-column>
+      <el-table-column show-overflow-tooltip prop="singer" label="歌手" align="center" />
+      <el-table-column show-overflow-tooltip prop="alName" label="专辑" align="center" />
+      <el-table-column prop="songTime" label="时长" width="100" align="center" />
+    </el-table>
+    <el-pagination
+      class="page"
+      :page-size="20"
+      layout="prev, pager, next"
+      :total="playList.num"
+      @size-change="changePageNum"
+      @current-change="changePageNum"
+      @prev-click="changePageNum"
+      @next-click="changePageNum"
+    />
+  </div>
 </template>
 <script setup lang="ts">
 import { ref, watch, PropType, toRefs } from "vue";
@@ -97,5 +109,45 @@ gainList();
 }
 .license {
   color: #f40;
+}
+.list {
+  width: 100%;
+  margin: 20px 0;
+  border-radius: 8px;
+  box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    .left {
+      display: flex;
+      align-items: center;
+      .title {
+        font-size: 24px;
+        font-weight: 600;
+        margin-right: 20px;
+      }
+      .num {
+        font-size: 14px;
+      }
+    }
+
+    .right {
+      display: flex;
+      align-items: center;
+      padding: 7px 14px;
+      background-color: #409eff;
+      border-radius: 50px;
+      color: white;
+      cursor: pointer;
+      .text {
+        margin-left: 10px;
+      }
+      .icon {
+        transform: translateY(2px);
+      }
+    }
+  }
 }
 </style>

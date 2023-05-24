@@ -120,3 +120,15 @@ export const getSingerList = async (params: SingerListData) => {
   const res: SingerList | any = await http.get("/artist/list", params);
   return res;
 };
+
+//获取mv详情
+export const getMvDetail = async (id: number | string) => {
+  const res: any = await http.get("/mv/detail", { mvid: id });
+  return res;
+};
+
+//获取mv播放链接
+export const getMvUrl = async (id: number | string) => {
+  const res: any = await http.get("/mv/url", { id });
+  return res;
+};

@@ -136,10 +136,12 @@ export const usePlayBarStore = defineStore({
     },
     //下一曲
     next() {
+      if (!this.playList.length) return;
       this.playEndSound();
     },
     //上一曲
     last() {
+      if (!this.playList.length) return;
       this.playEndSound(false);
     },
     //切换音乐(tag：用来区别上一曲还是下一曲)
@@ -185,6 +187,8 @@ export const usePlayBarStore = defineStore({
           (item) => item.src === this.playUrl
         );
         this.initPath();
+      } else {
+        localStorage.setItem("playList", JSON.stringify(this.playList));
       }
     },
     //删除playList中的单条数据
@@ -196,6 +200,7 @@ export const usePlayBarStore = defineStore({
         this.next();
       }
       this.playList.splice(index, 1);
+      localStorage.setItem("playList", JSON.stringify(this.playList));
     },
     //删除playList中的全部数据
     playListRemoveAll() {

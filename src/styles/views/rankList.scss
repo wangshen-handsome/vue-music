@@ -63,44 +63,5 @@
     }
   }
 
-  .list {
-    width: calc(70% - 20px);
-    margin: 20px 0;
-    border-radius: 8px;
-    box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
-    .header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 20px;
-      .left{
-        display: flex;
-        align-items: center;
-        .title {
-          font-size: 24px;
-          font-weight: 600;
-          margin-right: 20px;
-        }
-        .num {
-          font-size: 14px;
-        }
-      }
 
-      .right{
-        display: flex;
-        align-items: center;
-        padding: 7px 14px;
-        background-color: #409eff;
-        border-radius: 50px;
-        color: white;
-        cursor: pointer;
-        .text{
-          margin-left: 10px;
-        }
-        .icon{
-          transform: translateY(2px);
-        }
-      }
-    }
-  }
 }

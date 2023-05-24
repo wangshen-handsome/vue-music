@@ -1,8 +1,10 @@
 import { defineStore } from "pinia";
 
+import { formSongList } from "@/utils/format";
+
 import { TopPlayData } from "@/types/songList";
 
-import { getCatList, getTopPlayList } from "@/apis/api";
+import { getCatList, getTopPlayList, getPlayList } from "@/apis/api";
 
 interface S {
   topPlayData: TopPlayData;
@@ -10,6 +12,8 @@ interface S {
   topPlayList: any[];
   name: string;
   topPlayLoading: boolean;
+  playList: any[];
+  playListLoading: boolean;
 }
 
 export const useSongStore = defineStore({
@@ -29,6 +33,10 @@ export const useSongStore = defineStore({
       //名称
       name: "全部歌单",
       topPlayLoading: false,
+      //歌曲列表
+      playList: [],
+      //歌曲列表加载状态
+      playListLoading: false,
     };
   },
   actions: {
@@ -61,6 +69,18 @@ export const useSongStore = defineStore({
       this.topPlayLoading = false;
 
       this.topPlayList.push(...res.playlists);
+    },
+    async actionPlayList(id: string | number) {
+      this.playListLoading = true;
+      const res = await getPlayList({ id });
+      res.playlist.tracks = formSongList(res.playlist.tracks, res.privileges);
+      this.playList = {
+        ...res.playlist,
+        avatarUrl: res.playlist.creator.avatarUrl,
+        nickname: res.playlist.creator.nickname,
+        num: res.playlist.tracks.length,
+      };
+      this.playListLoading = false;
     },
   },
 });

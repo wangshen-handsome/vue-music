@@ -20,7 +20,7 @@
     </template>
     <template #default>
       <div class="hot-list" v-if="list && list.length">
-        <div class="item" v-for="item in list">
+        <div class="item" v-for="item in list" @click="goDetail(item.id)">
           <div class="img">
             <el-image :src="item.cover" fit="cover">
               <template #placeholder>
@@ -48,7 +48,9 @@
   </el-skeleton>
 </template>
 <script setup lang="ts">
-import { PropType } from "vue";
+import { PropType, toRefs } from "vue";
+
+import { useRouter } from "vue-router";
 
 import { Picture } from "@element-plus/icons-vue";
 
@@ -61,6 +63,8 @@ import { ElEmpty } from "element-plus";
 //处理tags
 const disposeTags = (tags: string[]) => tags.reduce((a, b) => (a += "#" + b), "");
 
+const router = useRouter();
+
 defineProps({
   list: {
     type: Array as PropType<any[]>,
@@ -68,6 +72,11 @@ defineProps({
   count: Number,
   loading: Boolean,
 });
+
+//前往播放详情页
+const goDetail = (id: number) => {
+  router.push("/mvDetail?id=" + id);
+};
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/mvList.scss";

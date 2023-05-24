@@ -1,4 +1,3 @@
-import { PlayList } from "./../types/rankList";
 import { defineStore } from "pinia";
 
 import { getTopList, getPlayList } from "@/apis/api";

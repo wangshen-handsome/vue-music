@@ -62,19 +62,7 @@
         </div>
       </div>
     </div>
-    <div class="list">
-      <div class="header">
-        <div class="left">
-          <div class="title">歌曲列表</div>
-          <div class="num">{{ playList.num }}首歌</div>
-        </div>
-        <div class="right">
-          <play-one class="icon" theme="filled" size="24" fill="#fff" />
-          <div class="text">全部播放</div>
-        </div>
-      </div>
-      <songList :playList="playList"></songList>
-    </div>
+    <songList :playList="playList" style="width: calc(70% - 20px)"></songList>
   </div>
   <loading v-else></loading>
 </template>

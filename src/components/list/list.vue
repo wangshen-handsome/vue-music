@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list" v-if="playList.length">
     <div class="item" v-for="(item, index) in playList">
       <div class="left">{{ index + 1 }}</div>
       <div class="center">
@@ -18,9 +18,12 @@
       </div>
     </div>
   </div>
+  <el-empty class="error" description="暂无歌曲，请自行添加。" v-else></el-empty>
 </template>
 <script setup lang="ts">
 import { ref, reactive, toRefs } from "vue";
+
+import { ElEmpty } from "element-plus";
 
 import { Play, PauseOne } from "@icon-park/vue-next";
 

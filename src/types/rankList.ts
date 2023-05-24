@@ -6,8 +6,8 @@ export interface TopList {
 }
 
 export interface PlayData {
-  s: number;
-  id: string;
+  s?: number;
+  id: string | number;
 }
 
 export interface PlayList {

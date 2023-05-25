@@ -116,6 +116,7 @@ const clearAll = () => {
     .right {
       display: flex;
       transform: translateY(3px);
+      cursor: pointer;
     }
     &:hover {
       color: black;

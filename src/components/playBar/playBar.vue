@@ -1,15 +1,15 @@
 <template>
   <div class="play-bar">
-    <audio ref="player" style="display: none" @timeupdate="changeNowSongTime"></audio>
+    <audio ref="player" :src="playUrl" autoplay @timeupdate="changeNowSongTime">
+      <source type='audio/ogg; codecs="vorbis"' />
+    </audio>
     <div class="left">
       <div class="img">
-        <el-image
-          src="https://p3-passport.byteimg.com/img/user-avatar/1c67f6c2986c675ba7e68c519de5900f~100x100.awebp"
-        ></el-image>
+        <el-image :src="playList.length ? playList[playIndex].al.picUrl : ''"></el-image>
       </div>
       <div class="text">
-        <div class="song-name">青花瓷</div>
-        <div class="singer">周杰伦</div>
+        <div class="song-name">{{ playList.length ? playList[playIndex].name : "" }}</div>
+        <div class="singer">{{ playList.length ? playList[playIndex].singer : "" }}</div>
       </div>
       <div class="time">
         {{ formatSongTime(nowSongTime) }} / {{ formatSongTime(duration) }}
@@ -69,6 +69,7 @@
       </div>
       <div class="more">
         <hamburger-button
+        class="button"
           @click="showPlaylist = !showPlaylist"
           theme="filled"
           size="30"
@@ -117,6 +118,9 @@ const {
   listenIsEnd,
   next,
   last,
+  playList,
+  playIndex,
+  playUrl,
   initPath,
 } = toRefs(usePlayBarStore());
 
@@ -152,7 +156,8 @@ watch(isEnd, listenIsEnd.value);
 onMounted(() => {
   //在组件挂载时将player实例赋值给audio
   audio.value = player;
-  initPath.value();
+
+  initPath.value(false);
 });
 </script>
 <style scoped lang="scss">

@@ -1,5 +1,9 @@
 import { defineStore } from "pinia";
 
+import { getLrc } from "@/apis/api";
+
+import { Message } from "@/utils/Message";
+
 interface S {
   isPlay: boolean;
   volume: number;
@@ -13,7 +17,6 @@ interface S {
   playUrl: string;
   playIndex: number;
   loading: boolean;
-  songLyrics: any[];
 }
 
 let volume = localStorage.getItem("volume");
@@ -23,8 +26,6 @@ let playList = localStorage.getItem("playList");
 let playUrl = localStorage.getItem("playUrl");
 
 let playIndex = localStorage.getItem("playIndex");
-
-import { Message } from "@/utils/Message";
 
 export const usePlayBarStore = defineStore({
   id: "playBarStore",
@@ -54,8 +55,6 @@ export const usePlayBarStore = defineStore({
       playIndex: playIndex ? Number(playIndex) : -1,
       //请求时的加载状态
       loading: false,
-      //歌曲歌词
-      songLyrics: [],
     };
   },
   actions: {
@@ -68,7 +67,12 @@ export const usePlayBarStore = defineStore({
       if (!this.playUrl) return;
       this.isPlay = !this.isPlay;
       if (this.isPlay) {
-        this.audio.play();
+        if (this.nowSongTime <= 0) {
+          this.queryById(this.playList[this.playIndex]);
+          this.isPlay = true;
+        } else {
+          this.audio.play();
+        }
       } else {
         this.audio.pause();
       }
@@ -79,13 +83,16 @@ export const usePlayBarStore = defineStore({
         this.changeIsPlay();
         return;
       }
+
       let index = this.playList.findIndex((prop) => prop.src === item.src);
+
       if (index === -1) {
         this.queryById(item);
       } else {
+        this.isPlay = true;
         this.playUrl = item.src;
         this.playIndex = index;
-        this.initPath();
+        this.initPath(false);
       }
     },
     //切换音量
@@ -123,16 +130,18 @@ export const usePlayBarStore = defineStore({
           this.onePlay();
           break;
       }
+      this.local();
     },
     //随机播放
     randomPlay() {
       this.playIndex = Math.floor(Math.random() * this.playList.length);
       this.playUrl = this.playList[this.playIndex].src;
-      this.initPath();
+      this.initPath(false);
     },
     //单曲循环
     onePlay() {
-      this.initPath();
+      this.audio.src = this.playUrl;
+      this.audio.play();
     },
     //下一曲
     next() {
@@ -158,25 +167,24 @@ export const usePlayBarStore = defineStore({
         }
       }
       this.playUrl = this.playList[this.playIndex].src;
-      this.initPath();
+      this.initPath(false);
     },
     //初始化音乐路径
-    initPath() {
-      if (this.playUrl === "") return;
-      this.isPlay = !this.isPlay;
-      this.audio.src = this.playUrl;
+    initPath(tag: boolean = true) {
+      if (this.playUrl === "" || !this.playList.length) return;
+      this.audio = new Audio();
+      if (tag) {
+        this.isPlay = !this.isPlay;
+      }
+      this.nowSongTime = 0;
       this.audio.volume = this.volume / 100;
+      this.local();
+    },
+    //本地存储
+    local() {
       localStorage.setItem("playList", JSON.stringify(this.playList));
       localStorage.setItem("playUrl", JSON.stringify(this.playUrl));
       localStorage.setItem("playIndex", JSON.stringify(this.playIndex));
-      this.audio.play();
-    },
-    //向playList中增添单个数据
-    playListAdd(item: any) {
-      this.playList.push(item);
-      this.playUrl = item.src;
-      this.playIndex = this.playList.length - 1;
-      this.initPath();
     },
     //向playList中增添多个数据
     playListAddMore(itemArr: any[]) {
@@ -186,10 +194,11 @@ export const usePlayBarStore = defineStore({
         this.playIndex = this.playList.findIndex(
           (item) => item.src === this.playUrl
         );
-        this.initPath();
       } else {
-        localStorage.setItem("playList", JSON.stringify(this.playList));
+        this.playIndex = this.playList.length - itemArr.length;
+        this.playUrl = itemArr[0].src;
       }
+      this.initPath();
     },
     //删除playList中的单条数据
     playListRemove(index: number) {
@@ -209,8 +218,8 @@ export const usePlayBarStore = defineStore({
       this.playIndex = -1;
       this.initPath();
     },
-    //通过歌曲id查询歌曲的播放链接和歌词
-    queryById(item: any) {
+    //通过歌曲id查询歌曲的歌词
+    async queryById(item: any) {
       this.loading = true;
 
       //判断是否是vip歌曲
@@ -225,9 +234,50 @@ export const usePlayBarStore = defineStore({
         }, 1500);
         return;
       }
-      //调接口
+
       //赋值
+      this.playUrl = item.src;
+
+      if (this.playList.some((item) => item.src === this.playUrl)) {
+        let index = this.playList.findIndex(
+          (item) => item.src === this.playUrl
+        );
+
+        if (index === this.playIndex) {
+          this.isPlay ? this.audio.play() : this.audio.pause();
+        } else {
+          this.isPlay = true;
+          this.playIndex = index;
+          this.initPath(false);
+        }
+        this.loading = false;
+
+        return;
+      }
+      //调接口
+      const res = await getLrc(item.id);
+      if (res.code !== 200) {
+        this.loading = false;
+        return;
+      }
+
+      this.isPlay = true;
+
+      this.playList.push({
+        ...item,
+        lrc: res.lrc.lyric,
+        src: this.playUrl,
+      });
+
       this.loading = false;
+
+      this.playIndex = this.playList.findIndex(
+        (item) => item.src === this.playUrl
+      );
+
+      this.local();
+
+      this.initPath(false);
     },
   },
 });

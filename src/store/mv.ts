@@ -4,6 +4,8 @@ import { MvData } from "@/types/mv";
 
 import { getMvList, getMvDetail, getMvUrl } from "@/apis/api";
 
+import { Message } from "@/utils/Message";
+
 interface S {
   mvData: MvData;
   mvList: any[];
@@ -63,6 +65,14 @@ export const useMvStore = defineStore({
     async actionMvDetail(id: number) {
       this.mvDetailLoading = true;
       const res = await getMvDetail(id);
+
+      if (!res) {
+        Message({ message: "此mv暂时无法观看，请切换。", type: "error" });
+        return;
+      }
+
+      this.mvDetailLoading = false;
+
       if (res.code === 200) {
         this.artistName = res.data.artistName;
         this.cover = res.data.cover;

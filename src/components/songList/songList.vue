@@ -5,10 +5,6 @@
         <div class="title">歌曲列表</div>
         <div class="num">{{ playList.num }}首歌</div>
       </div>
-      <div class="right">
-        <play-one class="icon" theme="filled" size="24" fill="#fff" />
-        <div class="text">全部播放</div>
-      </div>
     </div>
     <el-table
       :data="list"
@@ -20,8 +16,24 @@
         <template #default="{ row }">
           <template v-if="row.index !== hoverIndex">{{ row.index }}</template>
           <template v-else>
-            <pause-one @click="changeIsPlay" v-if="false" theme="filled" size="22" />
-            <play @click="clickPlayMusic(row)" v-else theme="filled" size="22" />
+            <pause-one
+              @click="changeIsPlay"
+              v-if="isPauseShow(row)"
+              theme="filled"
+              size="22"
+            />
+            <play
+              @click="clickPlayMusic(row)"
+              v-if="isPlayShow(row)"
+              theme="filled"
+              size="22"
+            />
+            <video-two
+              @click="router.push('/mvDetail?id=' + row.mv)"
+              v-if="row.mv"
+              theme="filled"
+              size="22"
+            />
           </template>
         </template>
       </el-table-column>
@@ -49,13 +61,17 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, PropType, toRefs } from "vue";
+import { ref, watch, PropType, toRefs, computed } from "vue";
 
-import { Play, PauseOne } from "@icon-park/vue-next";
+import { useRouter } from "vue-router";
+
+import { Play, PauseOne, VideoTwo, PlayOne } from "@icon-park/vue-next";
 
 import { usePlayBarStore } from "@/store/playBar";
 
-const { clickPlayMusic, changeIsPlay } = toRefs(usePlayBarStore());
+const { clickPlayMusic, changeIsPlay, isPlay, playUrl } = toRefs(usePlayBarStore());
+
+const router = useRouter();
 
 const props = defineProps({
   playList: Object as PropType<any>,
@@ -63,6 +79,20 @@ const props = defineProps({
 
 //存放当前页数据
 let list = ref<any[]>([]);
+
+const isPauseShow = computed(() => {
+  return (row: any) => {
+    let tag = row.src === playUrl.value && isPlay && !row.vip && !row.license;
+    return tag;
+  };
+});
+
+const isPlayShow = computed(() => {
+  return (row: any) => {
+    let tag = (row.src !== playUrl.value && !row.vip && !row.license) || !isPlay;
+    return tag;
+  };
+});
 
 //移入的下标
 let hoverIndex = ref<number>(-1);

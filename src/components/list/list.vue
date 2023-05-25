@@ -1,7 +1,13 @@
 <template>
   <div class="list" v-if="playList.length">
+    <div class="top">
+      <div class="left">最近收听</div>
+      <div class="right">
+        <clear @click="clearAll" theme="filled" size="30" />
+      </div>
+    </div>
     <div class="item" v-for="(item, index) in playList">
-      <div class="left">{{ index + 1 }}</div>
+      <div class="left">{{ index + 1 }}、</div>
       <div class="center">
         <span class="song-name">{{ item.name }}</span>
         <span class="singer">({{ item.singer }})</span>
@@ -10,11 +16,18 @@
         <pause-one
           class="icon"
           @click="clickPlayMusic(item)"
+          v-if="playUrl === item.src && isPlay"
+          theme="filled"
+          size="30"
+        />
+        <play
+          class="icon"
+          @click="clickPlayMusic(item)"
           v-if="playUrl !== item.src"
           theme="filled"
           size="30"
         />
-        <play class="icon" @click="changeIsPlay" v-else theme="filled" size="30" />
+        <delete @click="remove(index)" theme="filled" size="30" />
       </div>
     </div>
   </div>
@@ -23,18 +36,61 @@
 <script setup lang="ts">
 import { ref, reactive, toRefs } from "vue";
 
-import { ElEmpty } from "element-plus";
+import { ElEmpty, ElMessageBox } from "element-plus";
 
-import { Play, PauseOne } from "@icon-park/vue-next";
+import { Play, PauseOne, Delete, Clear } from "@icon-park/vue-next";
 
 import { usePlayBarStore } from "@/store/playBar";
 
-const { changeIsPlay, playList, playUrl, clickPlayMusic } = toRefs(usePlayBarStore());
+const {
+  playList,
+  playUrl,
+  clickPlayMusic,
+  isPlay,
+  playListRemove,
+  playListRemoveAll,
+} = toRefs(usePlayBarStore());
 
-console.log(playList.value);
+//删除单个音乐
+const remove = (index: number) => {
+  ElMessageBox({
+    title: "提示",
+    message: "是否删除?",
+    showCancelButton: true,
+    cancelButtonText: "取消",
+    confirmButtonText: "确认",
+  }).then(() => {
+    playListRemove.value(index);
+  });
+};
+
+//删除全部音乐
+const clearAll = () => {
+  ElMessageBox({
+    title: "提示",
+    message: "是否全部删除?",
+    showCancelButton: true,
+    cancelButtonText: "取消",
+    confirmButtonText: "确认",
+  }).then(() => {
+    playListRemoveAll.value();
+  });
+};
 </script>
 <style scoped lang="scss">
 .list {
+  .top {
+    display: flex;
+    padding: 10px;
+    justify-content: space-between;
+    .left {
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .right {
+      cursor: pointer;
+    }
+  }
   .item {
     margin: 10px;
     display: flex;
@@ -47,11 +103,18 @@ console.log(playList.value);
     box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
     transition: all 0.5s;
     .center {
+      width: 60%;
+      overflow: hidden;
+      display: -webkit-box;
+      text-overflow: ellipsis;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
       .singer {
         font-size: 14px;
       }
     }
     .right {
+      display: flex;
       transform: translateY(3px);
     }
     &:hover {

@@ -25,6 +25,8 @@ import { MvData } from "@/types/mv";
 
 import { SingerListData, SingerList } from "@/types/singer";
 
+import { Lrc } from "@/types/playBar";
+
 //获取首页banner图
 export const getBanner = async () => {
   const res: Banner | any = await http.get("/banner");
@@ -130,5 +132,11 @@ export const getMvDetail = async (id: number | string) => {
 //获取mv播放链接
 export const getMvUrl = async (id: number | string) => {
   const res: any = await http.get("/mv/url", { id });
+  return res;
+};
+
+//获取歌词
+export const getLrc = async (id: number | string) => {
+  const res: Lrc | any = await http.get("/lyric", { id });
   return res;
 };

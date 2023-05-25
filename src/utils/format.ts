@@ -38,6 +38,7 @@ export const formSongList = (arr: any[], privileges: any[]) => {
     item.license = !privileges[index].cp;
     item.vip = privileges[index].fee === 1;
     item.index = index + 1;
+    item.src = `https://music.163.com/song/media/outer/url?id=${item.id}.mp3`;
   });
   return arr;
 };

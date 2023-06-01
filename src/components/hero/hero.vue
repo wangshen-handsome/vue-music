@@ -34,7 +34,9 @@
       <div class="desc">
         <h4>歌单简介</h4>
         <div class="date content">
-          {{ data.description }}
+          <el-tooltip effect="dark" :content="data.description" placement="bottom">
+            {{ data.description }}
+          </el-tooltip>
         </div>
       </div>
     </div>
@@ -44,6 +46,8 @@
 import { ref, reactive, PropType } from "vue";
 
 import { formatTime, formatNum } from "@/utils/format";
+
+import { ElTooltip } from "element-plus";
 
 import { Headset, Star, MessageOne } from "@icon-park/vue-next";
 
@@ -108,6 +112,7 @@ defineProps({
       }
       .content {
         padding-left: 0;
+        cursor: pointer;
       }
     }
 

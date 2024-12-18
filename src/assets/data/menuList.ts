@@ -37,10 +37,10 @@ export const menuList: M[] = [
     title: "歌手",
     icon: `<?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="13" r="9" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M5 44C5 35.5625 11.175 27.6875 16.4 26C16.4 26 21.15 31.0625 24 34.4375L31.6 26C35.875 26.5625 43 35.5625 43 44" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M2 44L46 44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
   },
-  {
-    id: 6,
-    name: "/my",
-    title: "我的音乐",
-    icon: `<?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M18 28H6C4.89543 28 4 28.8954 4 30V42C4 43.1046 4.89543 44 6 44H18C19.1046 44 20 43.1046 20 42V30C20 28.8954 19.1046 28 18 28Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M42 4H30C28.8954 4 28 4.89543 28 6V18C28 19.1046 28.8954 20 30 20H42C43.1046 20 44 19.1046 44 18V6C44 4.89543 43.1046 4 42 4Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M28 28H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 36H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 44H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
-  },
+  // {
+  //   id: 6,
+  //   name: "/my",
+  //   title: "我的音乐",
+  //   icon: `<?xml version="1.0" encoding="UTF-8"?><svg width="24" height="24" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M18 4H6C4.89543 4 4 4.89543 4 6V18C4 19.1046 4.89543 20 6 20H18C19.1046 20 20 19.1046 20 18V6C20 4.89543 19.1046 4 18 4Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M18 28H6C4.89543 28 4 28.8954 4 30V42C4 43.1046 4.89543 44 6 44H18C19.1046 44 20 43.1046 20 42V30C20 28.8954 19.1046 28 18 28Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M42 4H30C28.8954 4 28 4.89543 28 6V18C28 19.1046 28.8954 20 30 20H42C43.1046 20 44 19.1046 44 18V6C44 4.89543 43.1046 4 42 4Z" fill="#409EFF" stroke="#409EFF" stroke-width="4" stroke-linejoin="round"/><path d="M28 28H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M36 36H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/><path d="M28 44H44" stroke="#409EFF" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+  // },
 ];

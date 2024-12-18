@@ -57,8 +57,8 @@
         <mv-list :count="mvData.limit" :list="mvList" :loading="mvLoading"></mv-list>
       </div>
     </div>
-    <div class="bottom">
-      <!-- 热门电台 -->
+    <!-- <div class="bottom">
+      热门电台
       <div class="hot" style="width: calc(50% - 10px); margin-right: 20px">
         <div class="top">
           <h3 class="title">热门电台</h3>
@@ -71,7 +71,7 @@
           ></hot-radio-list>
         </div>
       </div>
-      <!-- 热门歌手 -->
+      热门歌手
       <div class="hot" style="width: calc(50% - 10px)">
         <div class="top">
           <h3 class="title">热门歌手</h3>
@@ -83,6 +83,19 @@
             :loading="hotSingerListLoading"
           ></hot-singer-list>
         </div>
+      </div>
+    </div> -->
+    <!-- 热门歌手 -->
+    <div class="hot">
+      <div class="top">
+        <h3 class="title">热门歌手</h3>
+      </div>
+      <div class="main">
+        <hot-singer-list
+          :count="hotSingerListData.limit / 3"
+          :list="hotSingerList"
+          :loading="hotSingerListLoading"
+        ></hot-singer-list>
       </div>
     </div>
   </div>

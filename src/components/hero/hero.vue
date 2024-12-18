@@ -1,13 +1,24 @@
 <template>
   <div class="hero">
     <div class="left">
-      <el-image class="img" :src="data.coverImgUrl">
+      <el-image
+        class="img"
+        :src="
+          type === 'songList'
+            ? data.coverImgUrl
+            : type === 'songs'
+            ? data.img1v1Url
+            : type === 'albums'
+            ? data.picUrl
+            : ''
+        "
+      >
         <div slot="placeholder" class="img">
           <i class="iconfont icon-placeholder"></i>
         </div>
       </el-image>
     </div>
-    <div class="right">
+    <div class="right" v-if="type === 'songList'">
       <div class="title">
         <h3>{{ data.name }}</h3>
         <span class="date">({{ formatTime(data.updateTime) }} 更新)</span>
@@ -40,20 +51,49 @@
         </div>
       </div>
     </div>
+    <div class="right" v-if="type === 'songs'">
+      <div class="title">
+        <h3>歌手 | {{ data.name }}</h3>
+        <span class="date">({{ formatTime(data.publishTime) }} 更新)</span>
+      </div>
+      <div class="desc">
+        <h4>歌手简介</h4>
+        <div class="date content">
+          <el-tooltip effect="dark" :content="data.briefDesc" placement="bottom">
+            {{ data.briefDesc }}
+          </el-tooltip>
+        </div>
+      </div>
+    </div>
+    <div class="right" v-if="type === 'albums'">
+      <div class="title">
+        <h3>专辑 | {{ data.name }}</h3>
+        <span class="date">({{ formatTime(data.publishTime) }} 更新)</span>
+      </div>
+      <div class="publishTime">发行时间 ： {{ formatTime(data.publishTime) }}</div>
+      <div class="company">发行公司 ： {{ data.company }}</div>
+      <div class="desc">
+        <h4>专辑简介</h4>
+        <div class="date content">
+          <el-tooltip effect="dark" :content="data.description" placement="bottom">
+            {{ data.description }}
+          </el-tooltip>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
-
 import { formatTime, formatNum } from "@/utils/format";
 
 import { ElTooltip } from "element-plus";
 
 import { Headset, Star, MessageOne } from "@icon-park/vue-next";
 
-defineProps({
-  data: Array as PropType<any>,
-});
+defineProps<{
+  data: any;
+  type: string;
+}>();
 </script>
 <style scoped lang="scss">
 .hero {
@@ -125,6 +165,12 @@ defineProps({
       text-overflow: ellipsis;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
+    }
+
+    .publishTime,
+    .company {
+      font-size: 12px;
+      color: #ccc;
     }
   }
 }

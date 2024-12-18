@@ -53,13 +53,11 @@ import { formatNum } from "@/utils/format";
 
 import { ElEmpty } from "element-plus";
 
-defineProps({
-  count: Number,
-  loading: Boolean,
-  list: {
-    type: Array as PropType<any[]>,
-  },
-});
+defineProps<{
+  count: number;
+  loading: boolean;
+  list: any[];
+}>();
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/hotRadioList.scss";

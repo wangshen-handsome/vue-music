@@ -5,7 +5,12 @@
       <el-container class="container">
         <el-aside width="200px"><Left></Left></el-aside>
         <el-main class="main">
-          <router-view></router-view>
+          <router-view v-slot="{ Component }">
+            <keep-alive v-if="$route.meta.keepAlive">
+              <component :is="Component" />
+            </keep-alive>
+            <component v-else :is="Component" />
+          </router-view>
         </el-main>
       </el-container>
     </el-container>

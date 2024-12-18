@@ -6,7 +6,10 @@
         <clear @click="clearAll" theme="filled" size="30" />
       </div>
     </div>
-    <div class="item" v-for="(item, index) in playList">
+    <div
+      :class="[item.src === playList[playIndex].src ? 'item active' : 'item']"
+      v-for="(item, index) in playList"
+    >
       <div class="left">{{ index + 1 }}、</div>
       <div class="center">
         <span class="song-name">{{ item.name }}</span>
@@ -16,14 +19,14 @@
         <pause-one
           class="icon"
           @click="clickPlayMusic(item)"
-          v-if="playUrl === item.src && isPlay"
+          v-if="playList[playIndex].src === item.src && isPlay"
           theme="filled"
           size="30"
         />
         <play
           class="icon"
           @click="clickPlayMusic(item)"
-          v-if="playUrl !== item.src"
+          v-else
           theme="filled"
           size="30"
         />
@@ -44,11 +47,11 @@ import { usePlayBarStore } from "@/store/playBar";
 
 const {
   playList,
-  playUrl,
   clickPlayMusic,
   isPlay,
   playListRemove,
   playListRemoveAll,
+  playIndex,
 } = toRefs(usePlayBarStore());
 
 //删除单个音乐
@@ -122,6 +125,11 @@ const clearAll = () => {
       color: black;
       box-shadow: 0 20px 27px rgba(0, 0, 0, 0.5);
     }
+  }
+
+  .active {
+    border: 1px solid pink;
+    background-color: #fff;
   }
 }
 </style>

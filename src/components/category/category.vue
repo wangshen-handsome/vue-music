@@ -29,7 +29,7 @@
       </div>
       <div class="content" v-else>
         <el-tag
-          :type="index === typeObj[prop.type] ? 'success' : ''"
+          :type="index == typeObj[prop.type] ? 'success' : ''"
           class="tag"
           v-for="(prop, index) in item.list.slice(0, 8)"
           @click="changeCat(prop, index)"
@@ -56,25 +56,23 @@
   </div>
 </template>
 <script setup lang="ts">
-import { PropType, defineEmits } from "vue";
-
 import { ElTag, ElPopover } from "element-plus";
 
 import { ArrowDown } from "@element-plus/icons-vue";
 
 const emit = defineEmits(["changeCat"]);
 
-defineProps({
-  //列表数据
-  list: {
-    type: Array as PropType<any[]>,
-  },
-  //标题名称
-  typeName: String,
-  //修改标题和重新获取数据的方法
-  changeCat: Function,
-  typeObj: Object,
-});
+withDefaults(
+  defineProps<{
+    list: any[];
+    typeName: string;
+    typeObj: any;
+  }>(),
+  {
+    typeName: undefined,
+    typeObj: undefined,
+  }
+);
 
 const changeCat = (prop: any, index: number) => {
   emit("changeCat", prop, index);

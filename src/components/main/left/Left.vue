@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, computed } from "vue";
+import { computed } from "vue";
 
 import { useRouter, useRoute } from "vue-router";
 

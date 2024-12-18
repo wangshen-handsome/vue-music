@@ -66,12 +66,9 @@ import { useHomeStore } from "@/store/home";
 
 const { rankList } = toRefs(useHomeStore());
 
-const props = defineProps({
-  list: {
-    type: Array as PropType<any[]>,
-    required: true,
-  },
-});
+const props = defineProps<{
+  list: any[];
+}>();
 
 let loading = ref<boolean>(true);
 

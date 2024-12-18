@@ -42,19 +42,16 @@
   </el-skeleton>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
 
 import { ElEmpty } from "element-plus";
 
 import { Picture } from "@element-plus/icons-vue";
 
-defineProps({
-  list: {
-    type: Array as PropType<any[]>,
-  },
-  count: Number,
-  loading: Boolean,
-});
+defineProps<{
+  list: any[];
+  count: number;
+  loading: boolean;
+}>();
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/newDisc.scss";

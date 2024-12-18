@@ -18,6 +18,8 @@
 <script setup lang="ts">
 import { ref, reactive, toRefs, toRef } from "vue";
 
+import { useRoute, useRouter } from "vue-router";
+
 import category from "@/components/category/category.vue";
 
 import SingerList from "@/components/singerList/singerList.vue";
@@ -32,11 +34,28 @@ const { singerListData, actionSingerList, singerLoading, singerList } = toRefs(
   useSingerStore()
 );
 
+const query: { initial?: number; area?: number; type?: number } = useRoute().query;
+
+const router = useRouter();
+
 const typeObj = ref({
-  initial: 0,
-  area: 0,
-  type: 0,
+  initial: query.initial ? query.initial : 0,
+  area: query.area ? query.area : 0,
+  type: query.type ? query.type : 0,
 });
+
+//修改singerListData
+if (query) {
+  if (query?.initial) {
+    singerListData.value.initial = singerMenuList[0].list[query?.initial].val;
+  }
+  if (query?.area) {
+    singerListData.value.area = singerMenuList[1].list[query?.area].val;
+  }
+  if (query?.type) {
+    singerListData.value.type = singerMenuList[2].list[query?.type].val;
+  }
+}
 
 const changeCat = (prop: any, index: number) => {
   switch (prop.type) {
@@ -53,6 +72,9 @@ const changeCat = (prop: any, index: number) => {
       singerListData.value.type = prop.val;
       break;
   }
+  router.push(
+    `/singer?initial=${typeObj.value.initial}&area=${typeObj.value.area}&type=${typeObj.value.type}`
+  );
   //请求歌手数据
   actionSingerList.value();
 };

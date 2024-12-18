@@ -1,12 +1,12 @@
 <template>
   <div class="play-list-detail" v-if="!playListLoading">
-    <hero :data="playList"></hero>
+    <hero :data="playList" type="songList"></hero>
     <song-list :playList="playList"></song-list>
   </div>
   <loading v-else></loading>
 </template>
 <script setup lang="ts">
-import { ref, reactive, toRefs } from "vue";
+import { ref, toRefs, watch } from "vue";
 
 import { useRoute } from "vue-router";
 
@@ -18,12 +18,19 @@ import loading from "@/components/loading/index.vue";
 
 import { useSongStore } from "@/store/songList";
 
-const { query }: any = useRoute();
+const query = ref<any>(useRoute().query);
 
 const { playList, playListLoading, actionPlayList } = toRefs(useSongStore());
 
-//请求数据
-actionPlayList.value(query.id);
+console.log(query);
+
+watch(query.value.id, () => {
+  console.log(query.value.id);
+
+  actionPlayList.value(query.value.id);
+});
+
+actionPlayList.value(query.value.id);
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/playListDetail.scss";

@@ -41,8 +41,6 @@
   </el-skeleton>
 </template>
 <script setup lang="ts">
-import { PropType } from "vue";
-
 import { useRouter } from "vue-router";
 
 import { Picture } from "@element-plus/icons-vue";
@@ -54,13 +52,11 @@ const router = useRouter();
 //处理tags
 const disposeTags = (tags: string[]) => tags.reduce((a, b) => (a += "#" + b), "");
 
-defineProps({
-  list: {
-    type: Array as PropType<any[]>,
-  },
-  count: Number,
-  loading: Boolean,
-});
+defineProps<{
+  list: any[];
+  count: number;
+  loading: boolean;
+}>();
 
 //前往详情页
 const goDetail = (id: number) => {

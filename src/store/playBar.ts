@@ -4,6 +4,8 @@ import { getLrc } from "@/apis/api";
 
 import { Message } from "@/utils/Message";
 
+import { formatLrcList } from "@/utils/format"
+
 interface S {
   isPlay: boolean;
   volume: number;
@@ -17,13 +19,13 @@ interface S {
   playUrl: string;
   playIndex: number;
   loading: boolean;
+  isRotate: string;
+  lyricList: any[]
 }
 
 let volume = localStorage.getItem("volume");
 
 let playList = localStorage.getItem("playList");
-
-let playUrl = localStorage.getItem("playUrl");
 
 let playIndex = localStorage.getItem("playIndex");
 
@@ -50,11 +52,15 @@ export const usePlayBarStore = defineStore({
       //音乐播放列表
       playList: playList ? JSON.parse(playList) : [],
       //当前播放的音乐的url
-      playUrl: playUrl ? playUrl : "",
+      playUrl: "",
       //音乐的下标
       playIndex: playIndex ? Number(playIndex) : -1,
       //请求时的加载状态
       loading: false,
+      //是否旋转
+      isRotate: 'paused',
+      //歌词列表
+      lyricList: []
     };
   },
   actions: {
@@ -64,12 +70,14 @@ export const usePlayBarStore = defineStore({
     },
     //切换音乐的暂停播放
     changeIsPlay() {
-      if (!this.playUrl) return;
+      if (this.playIndex === -1) return;
       this.isPlay = !this.isPlay;
+      this.isRotate = this.isPlay ? 'running' : 'paused'
       if (this.isPlay) {
         if (this.nowSongTime <= 0) {
           this.queryById(this.playList[this.playIndex]);
           this.isPlay = true;
+          this.isRotate = this.isPlay ? 'running' : 'paused'
         } else {
           this.audio.play();
         }
@@ -89,7 +97,9 @@ export const usePlayBarStore = defineStore({
       if (index === -1) {
         this.queryById(item);
       } else {
+
         this.isPlay = true;
+        this.isRotate = this.isPlay ? 'running' : 'paused'
         this.playUrl = item.src;
         this.playIndex = index;
         this.initPath(false);
@@ -100,10 +110,12 @@ export const usePlayBarStore = defineStore({
       this.volume = val;
       this.audio.volume = val / 100;
       localStorage.setItem("volume", val.toString());
+      return undefined;
     },
     //切换进度条
     changeAudioCurrentTime(val: number) {
       this.nowSongTime = this.audio.currentTime = val;
+      return undefined;
     },
     //切换播放时间和是否播放结束
     changeNowSongTime(e: any) {
@@ -155,6 +167,8 @@ export const usePlayBarStore = defineStore({
     },
     //切换音乐(tag：用来区别上一曲还是下一曲)
     switchMusic(tag: boolean = true) {
+      this.isPlay = true;
+
       if (tag) {
         this.playIndex += 1;
         if (this.playIndex >= this.playList.length) {
@@ -173,17 +187,19 @@ export const usePlayBarStore = defineStore({
     initPath(tag: boolean = true) {
       if (this.playUrl === "" || !this.playList.length) return;
       this.audio = new Audio();
+      this.audio.src = this.playUrl;
       if (tag) {
         this.isPlay = !this.isPlay;
+        this.isRotate = this.isPlay ? 'running' : 'paused'
       }
-      this.nowSongTime = 0;
+      this.changeAudioCurrentTime(0)
+
       this.audio.volume = this.volume / 100;
       this.local();
     },
     //本地存储
     local() {
       localStorage.setItem("playList", JSON.stringify(this.playList));
-      localStorage.setItem("playUrl", JSON.stringify(this.playUrl));
       localStorage.setItem("playIndex", JSON.stringify(this.playIndex));
     },
     //向playList中增添多个数据
@@ -207,8 +223,14 @@ export const usePlayBarStore = defineStore({
       }
       if (this.playUrl === this.playList[index].src) {
         this.next();
+      } else {
+        this.initPath(false);
       }
+
       this.playList.splice(index, 1);
+      this.playIndex = this.playList.findIndex(
+        (item) => item.src === this.playUrl
+      );
       localStorage.setItem("playList", JSON.stringify(this.playList));
     },
     //删除playList中的全部数据
@@ -244,9 +266,10 @@ export const usePlayBarStore = defineStore({
         );
 
         if (index === this.playIndex) {
-          this.isPlay ? this.audio.play() : this.audio.pause();
+          this.changeIsPlay();
         } else {
           this.isPlay = true;
+          this.isRotate = this.isPlay ? 'running' : 'paused'
           this.playIndex = index;
           this.initPath(false);
         }
@@ -262,12 +285,15 @@ export const usePlayBarStore = defineStore({
       }
 
       this.isPlay = true;
+      this.isRotate = this.isPlay ? 'running' : 'paused'
 
       this.playList.push({
         ...item,
+        // lrc: formatLrcList(res.lrc.lyric),
         lrc: res.lrc.lyric,
         src: this.playUrl,
       });
+
 
       this.loading = false;
 

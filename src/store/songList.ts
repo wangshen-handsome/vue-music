@@ -1,3 +1,4 @@
+import { getLocal } from "./../utils/localStorage";
 import { defineStore } from "pinia";
 
 import { formSongList } from "@/utils/format";
@@ -73,6 +74,7 @@ export const useSongStore = defineStore({
     async actionPlayList(id: string | number) {
       this.playListLoading = true;
       const res = await getPlayList({ id });
+
       res.playlist.tracks = formSongList(res.playlist.tracks, res.privileges);
       this.playList = {
         ...res.playlist,

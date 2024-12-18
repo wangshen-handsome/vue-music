@@ -207,19 +207,17 @@ export const useHomeStore = defineStore({
         this.hotSingerListLoading = true;
         let res = await getHotSingerList(this.hotSingerListData);
         this.hotSingerListLoading = false;
-        let num: number = 0;
         let arr: any[] = [];
         let data: any[] = [];
-        res.artists.forEach((item: any) => {
-          if (num === 9) {
+        for (let i = 0; i < res.artists.length; i++) {
+          if (data.length === 12) {
             arr.push(data);
-            data = [];
-            num = 0;
+            data = [res.artists[i]];
           } else {
-            data.push(item);
-            num++;
+            data.push(res.artists[i]);
           }
-        });
+        }
+        arr.push(data);
         this.hotSingerList.push(...arr);
       }
     },

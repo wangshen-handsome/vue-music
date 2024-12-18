@@ -57,6 +57,7 @@ export const useRankStore = defineStore({
       ) {
         await this.actionTopList();
       }
+
       if (!this.playData.id) {
         this.playData.id =
           num === 0

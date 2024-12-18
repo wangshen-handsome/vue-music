@@ -29,7 +29,7 @@
               size="22"
             />
             <video-two
-              @click="router.push('/mvDetail?id=' + row.mv)"
+              @click="goMvDetail(row.mv)"
               v-if="row.mv"
               theme="filled"
               size="22"
@@ -61,7 +61,9 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, watch, PropType, toRefs, computed } from "vue";
+import { ref, watch, toRefs, computed } from "vue";
+
+import { pauseMusic } from "@/utils/pauseMusic";
 
 import { useRouter } from "vue-router";
 
@@ -73,9 +75,9 @@ const { clickPlayMusic, changeIsPlay, isPlay, playUrl } = toRefs(usePlayBarStore
 
 const router = useRouter();
 
-const props = defineProps({
-  playList: Object as PropType<any>,
-});
+const props = defineProps<{
+  playList: any;
+}>();
 
 //存放当前页数据
 let list = ref<any[]>([]);
@@ -108,6 +110,11 @@ const changePageNum = (index: number) => {
 watch(pageNum, () => {
   gainList();
 });
+
+const goMvDetail = (mv: number) => {
+  pauseMusic();
+  router.push("/mvDetail?id=" + mv);
+};
 
 //获取list
 const gainList = () => {

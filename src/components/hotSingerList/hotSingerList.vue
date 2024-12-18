@@ -1,14 +1,12 @@
 <template>
-  <el-skeleton
-    class="hot-singer-list"
-    :count="count"
-    :loading="loading"
-    animated
-    :throttle="500"
-  >
+  <el-skeleton :loading="loading" animated :throttle="500">
     <template #template>
-      <div class="item">
-        <el-skeleton-item class="img" variant="image" />
+      <div class="hot-singer-list">
+        <div class="content">
+          <div class="item" v-for="item in count" :key="item">
+            <el-skeleton-item class="img" variant="image" />
+          </div>
+        </div>
       </div>
     </template>
     <template #default>
@@ -24,6 +22,7 @@
           <el-carousel-item class="item" v-for="item in list" :key="item.id">
             <div class="img" v-for="prop in item">
               <img :src="prop.picUrl" :alt="prop.name" :title="prop.name" />
+              <div class="name">{{ prop.name }}</div>
             </div>
           </el-carousel-item>
         </el-carousel>
@@ -33,15 +32,11 @@
   </el-skeleton>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
-
-defineProps({
-  count: Number,
-  loading: Boolean,
-  list: {
-    type: Array as PropType<any[]>,
-  },
-});
+defineProps<{
+  count: number;
+  loading: boolean;
+  list: any[];
+}>();
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/hotSingerList.scss";

@@ -17,16 +17,25 @@
       width: 45px;
       height: 45px;
       margin: 5px;
-      border-radius: 8px;
+      border-radius: 50%;
       margin-left: 25px;
       box-shadow: 0 20px 27px rgba(0, 0, 0, 0.2);
+      animation: rotate 10s linear 0s infinite;
       .el-image {
         width: 100%;
         height: 100%;
-        border-radius: 8px;
+        border-radius: 50%;
 
         .el-image__inner {
-          border-radius: 8px;
+          border-radius: 50%;
+        }
+      }
+      @keyframes rotate {
+        0% {
+          transform: rotate(0);
+        }
+        100% {
+          transform: rotate(360deg);
         }
       }
     }
@@ -82,6 +91,10 @@
         height: 300px;
         border-radius: 8px;
         background-color: #eee;
+        overflow: auto;
+        &::-webkit-scrollbar {
+          display: none;
+        }
       }
     }
   }

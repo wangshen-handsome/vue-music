@@ -6,9 +6,14 @@
 <script setup lang="ts">
 import { ref, reactive } from "vue";
 
-defineProps({
-  tag: Boolean,
-});
+withDefaults(
+  defineProps<{
+    tag: boolean;
+  }>(),
+  {
+    tag: false,
+  }
+);
 </script>
 <style scoped lang="scss">
 .loading {

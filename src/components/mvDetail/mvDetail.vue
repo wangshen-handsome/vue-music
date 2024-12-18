@@ -9,6 +9,8 @@
   <loading v-else></loading>
 </template>
 <script setup lang="ts">
+console.log(1);
+
 import { ref, reactive, toRefs } from "vue";
 
 import { useRoute } from "vue-router";

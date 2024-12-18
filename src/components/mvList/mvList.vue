@@ -48,7 +48,7 @@
   </el-skeleton>
 </template>
 <script setup lang="ts">
-import { PropType, toRefs } from "vue";
+import { pauseMusic } from "@/utils/pauseMusic";
 
 import { useRouter } from "vue-router";
 
@@ -61,20 +61,19 @@ import { Monitor, Play } from "@icon-park/vue-next";
 import { ElEmpty } from "element-plus";
 
 //处理tags
-const disposeTags = (tags: string[]) => tags.reduce((a, b) => (a += "#" + b), "");
+// const disposeTags = (tags: string[]) => tags.reduce((a, b) => (a += "#" + b), "");
 
 const router = useRouter();
 
-defineProps({
-  list: {
-    type: Array as PropType<any[]>,
-  },
-  count: Number,
-  loading: Boolean,
-});
+defineProps<{
+  list: any[];
+  count: number;
+  loading: boolean;
+}>();
 
 //前往播放详情页
 const goDetail = (id: number) => {
+  pauseMusic();
   router.push("/mvDetail?id=" + id);
 };
 </script>

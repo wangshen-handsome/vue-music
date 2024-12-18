@@ -14,8 +14,8 @@ export interface TopPlayList {
 }
 
 export interface TopPlayData {
-  limit: number;
-  order: string;
-  cat: string;
-  offset: number;
+  limit?: number;
+  order?: string;
+  cat?: string;
+  offset?: number;
 }

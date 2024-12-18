@@ -13,18 +13,30 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/index",
         component: () => import("@/views/index.vue"),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: "/rank",
         component: () => import("@/views/rankList.vue"),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: "/songList",
         component: () => import("@/views/songList.vue"),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: "/mv",
         component: () => import("@/views/mv.vue"),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: "/mvDetail",
@@ -38,23 +50,35 @@ const routes: Array<RouteRecordRaw> = [
       {
         path: "/singer",
         component: () => import("@/views/singer.vue"),
+        meta: {
+          keepAlive: true,
+        },
+      },
+      {
+        path: "/singerDetail",
+        component: () => import("@/components/singerDetail/singerDetail.vue"),
+        meta: {
+          keepAlive: true,
+        },
       },
       {
         path: "/my",
         component: () => import("@/views/myMusic.vue"),
-      },
-      {
-        path: "/",
-        redirect: "/index",
+        meta: {
+          keepAlive: true,
+        },
       },
       // {
       //   path: "/searchDetail",
       //   component: () => import("../views/searchDetail/searchDetail.vue"),
+      //   meta: {
+      //     keepAlive: true,
+      //   },
       // },
-      // {
-      //   path: "/videoPlay",
-      //   component: () => import("../views/videoPlay/videoPlay.vue"),
-      // },
+      {
+        path: "/",
+        redirect: "/index",
+      },
     ],
   },
   {

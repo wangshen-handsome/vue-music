@@ -27,13 +27,12 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, PropType } from "vue";
 
 import { formatNum } from "@/utils/format";
 
-defineProps({
-  list: Array as PropType<any[]>,
-});
+defineProps<{
+  list:any[]
+}>();
 </script>
 <style scoped lang="scss">
 @import "@/styles/components/singerList.scss";

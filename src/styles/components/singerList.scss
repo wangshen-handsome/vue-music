@@ -9,8 +9,9 @@
     display: flex;
     cursor: pointer;
     transition: all 0.5s;
+    overflow: hidden;
     .left {
-        margin-right: 30px;
+        // margin-right: 30px;
       .img {
         width: 100px;
         height: 100px;

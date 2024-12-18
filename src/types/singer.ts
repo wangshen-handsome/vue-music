@@ -1,9 +1,9 @@
 export interface SingerListData {
-  type: number;
-  area: number;
-  initial: number;
-  limit: number;
-  offset: number;
+  type: number | string;
+  area: number | string;
+  initial: number | string;
+  limit: number | string;
+  offset: number | string;
 }
 
 export interface SingerList {

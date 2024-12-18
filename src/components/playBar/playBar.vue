@@ -4,7 +4,7 @@
       <source type='audio/ogg; codecs="vorbis"' />
     </audio>
     <div class="left">
-      <div class="img">
+      <div class="img" :style="{ 'animation-play-state': isRotate }">
         <el-image :src="playList.length ? playList[playIndex].al.picUrl : ''"></el-image>
       </div>
       <div class="text">
@@ -32,66 +32,33 @@
       <!-- 音量 -->
       <div class="volume">
         <div class="volume-slider" v-if="isShowVolume">
-          <el-slider
-            @input="changeVolume"
-            :min="0"
-            :max="100"
-            v-model="volume"
-            vertical
-            height="200px"
-          />
+          <el-slider @input="changeVolume" :min="0" :max="100" v-model="volume" vertical height="200px" />
         </div>
         <volume-mute @click="showVolume" v-if="volume === 0" theme="filled" size="30" />
-        <volume-small
-          @click="showVolume"
-          v-else-if="volume > 0 && volume <= 50"
-          theme="filled"
-          size="30"
-        />
+        <volume-small @click="showVolume" v-else-if="volume > 0 && volume <= 50" theme="filled" size="30" />
         <volume-notice @click="showVolume" v-else theme="filled" size="30" />
       </div>
     </div>
     <div class="right">
       <div class="pattern">
-        <play-cycle
-          @click="changePattern(2)"
-          v-if="pattern === 1"
-          theme="filled"
-          size="30"
-        />
-        <shuffle-one
-          @click="changePattern(3)"
-          v-else-if="pattern === 2"
-          theme="filled"
-          size="30"
-        />
+        <play-cycle @click="changePattern(2)" v-if="pattern === 1" theme="filled" size="30" />
+        <shuffle-one @click="changePattern(3)" v-else-if="pattern === 2" theme="filled" size="30" />
         <play-once @click="changePattern(1)" v-else theme="filled" size="30" />
       </div>
       <div class="more">
-        <hamburger-button
-        class="button"
-          @click="showPlaylist = !showPlaylist"
-          theme="filled"
-          size="30"
-        />
+        <hamburger-button class="button" @click="showPlaylist = !showPlaylist" theme="filled" size="30" />
         <div v-if="showPlaylist" class="playlist">
           <list></list>
         </div>
       </div>
     </div>
     <div class="progress-bar">
-      <el-slider
-        :min="0"
-        :max="duration"
-        v-model="nowSongTime"
-        :show-tooltip="false"
-        @input="changeAudioCurrentTime"
-      />
+      <el-slider :min="0" :max="duration" v-model="nowSongTime" :show-tooltip="false" @input="changeAudioCurrentTime" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, toRefs, onMounted, watch } from "vue";
+import { ref, toRefs, onMounted, watch } from "vue";
 
 import { ElSlider, ElImage } from "element-plus";
 
@@ -122,6 +89,7 @@ const {
   playIndex,
   playUrl,
   initPath,
+  isRotate
 } = toRefs(usePlayBarStore());
 
 import {
@@ -157,7 +125,7 @@ onMounted(() => {
   //在组件挂载时将player实例赋值给audio
   audio.value = player;
 
-  initPath.value(false);
+  initPath.value();
 });
 </script>
 <style scoped lang="scss">

@@ -26,7 +26,7 @@
     >
       <hot-list
         :list="topPlayList"
-        :count="topPlayData.limit"
+        :count="topPlayList.length"
         :loading="topPlayLoading && topPlayData.offset === 0"
       ></hot-list>
     </div>
@@ -37,15 +37,24 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref, reactive, toRefs } from "vue";
+import { ref, toRefs, defineAsyncComponent } from "vue";
 
-import category from "@/components/category/category.vue";
+import { TopPlayData } from "@/types/songList";
 
-import hotList from "@/components/hotList/hotList.vue";
+import { useRoute, useRouter } from "vue-router";
 
 import loading from "@/components/loading/index.vue";
 
 import { useSongStore } from "@/store/songList";
+
+//使用代码分包，优化性能
+const category = defineAsyncComponent(() => import("@/components/category/category.vue"));
+
+const hotList = defineAsyncComponent(() => import("@/components/hotList/hotList.vue"));
+
+const query: TopPlayData = useRoute().query;
+
+const router = useRouter();
 
 const {
   actionCatList,
@@ -56,6 +65,16 @@ const {
   topPlayList,
   topPlayLoading,
 } = toRefs(useSongStore());
+
+//修改topplaydata数据
+if (query) {
+  if (query?.order) {
+    topPlayData.value.order = query?.order;
+  }
+  if (query?.cat) {
+    topPlayData.value.cat = query?.cat;
+  }
+}
 
 //切换类型
 const changeOrder = (text: string) => {
@@ -72,12 +91,13 @@ const loadMore = () => {
 };
 
 //分类名称
-let typeName = ref<number>();
+let typeName = ref<string | undefined>(topPlayData.value.cat);
 
 //分类点击事件
 const changeCat = (prop: any) => {
   topPlayData.value.cat = typeName.value = prop.name;
   actionTopPlayList.value();
+  router.push(`/songList?order=${topPlayData.value.order}&cat=${topPlayData.value.cat}`);
 };
 
 //请求分类数据
